@@ -8,7 +8,7 @@ namespace Blockchain
         public int Reward { set; get; }
         public int Difficulty { set; get; } = 2;
         public IList<Block> Chain { set; get; }
-        IList<Transaction> PendingTransactions = new List<Transaction>();
+        public IList<Transaction> PendingTransactions = new List<Transaction>();
 
 
         public Blockchain(int reward = 1)
