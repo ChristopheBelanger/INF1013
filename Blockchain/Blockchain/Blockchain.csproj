@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{6498E930-BB12-475B-8B48-BF74B6F266C5}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Blockchain</RootNamespace>
     <AssemblyName>Blockchain</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
@@ -46,7 +46,9 @@
     <Compile Include="Block.cs" />
     <Compile Include="Blockchain.cs" />
     <Compile Include="Transaction.cs" />
-    <Compile Include="P2PServer.cs" />
+    <Compile Include="NodeServer.cs" />
+    <Compile Include="NodeClient.cs" />
+    <Compile Include="Properties\Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
