@@ -7,26 +7,27 @@ using System.Threading;
 
 namespace Blockchain
 {
-    public class NodeServer
+    public class ServeurNoeud
     {
         private TcpListener tcpListener;
         private Thread listenThread;
         String ip  { get; set; } = "127.0.0.1";
         int port { get; set; } = 8080;
         Blockchain blockchain;
+        bool listen = true;
 
-        public NodeServer(String ip, int port, Blockchain blockchain)
+        public ServeurNoeud(Blockchain blockchain, String ip, int port)
         {
             this.ip = ip;
             this.port = port;
             this.blockchain = blockchain;
         }
-        public NodeServer(int port, Blockchain blockchain)
+        public ServeurNoeud(Blockchain blockchain, int port)
         {
             this.port = port;
             this.blockchain = blockchain;
         }
-        public NodeServer(Blockchain blockchain)
+        public ServeurNoeud(Blockchain blockchain)
         {
             this.blockchain = blockchain;
         }
@@ -41,22 +42,23 @@ namespace Blockchain
         public void Stop()
         {
             tcpListener.Stop();
+            listen = false;
         }
 
         private void ListenForClients()
         {
             this.tcpListener.Start();
-            Console.WriteLine("Server has started on {0}:{1}.{2}Waiting for a connection...", ip, port, Environment.NewLine);
+            Console.WriteLine("Server has started on {0}:{1}.{2}En Attente de connexion...", ip, port, Environment.NewLine);
 
-            while (true)
+            while (listen)
             {
                 //blocks until a client has connected to the server
                 TcpClient client = this.tcpListener.AcceptTcpClient();
-                Console.WriteLine("A client connected.");
+                Console.WriteLine("Un Client s'est connecte.");
 
                 // here was first an message that send hello client
                 NetworkStream clientStream = client.GetStream();
-                String hello = String.Format("Connetcted Successfully to {0}:{1}", ip, port);
+                String hello = String.Format("Succes de connexion a {0}:{1}", ip, port);
                 byte[] bytes = Encoding.ASCII.GetBytes(hello);
                 clientStream.Write(bytes, 0, bytes.Length);
 
@@ -75,9 +77,9 @@ namespace Blockchain
             TcpClient tcpClient = (TcpClient)client;
             NetworkStream clientStream = tcpClient.GetStream();
 
-            while (true)
+            while (listen)
             {
-                byte[] message = new byte[clientStream.Length];
+                byte[] message = new byte[4096];
                 int bytesRead = 0;
 
                 try

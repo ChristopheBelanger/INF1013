@@ -5,13 +5,13 @@ namespace Blockchain
     {
         public string FromAddress { get; set; }
         public string ToAddress { get; set; }
-        public int Amount { get; set; }
+        public int Montant { get; set; }
 
-        public Transaction(string fromAddress, string toAddress, int amount)
+        public Transaction(string fromAddress, string toAddress, int montant)
         {
             FromAddress = fromAddress;
             ToAddress = toAddress;
-            Amount = amount;
+            Montant = montant;
         }
     }
 }
