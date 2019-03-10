@@ -105,7 +105,7 @@ namespace Blockchain
                 String bufferincmessage = encoder.GetString(message, 0, bytesRead);
 
 
-                if (Regex.IsMatch(bufferincmessage, Properties.Settings.test, RegexOptions.IgnoreCase))
+                if (Regex.IsMatch(bufferincmessage, "test", RegexOptions.IgnoreCase))
                 {
                 //    bufferincmessageresult = bufferincmessage.Split('^');
                 //    String nickname_Cl = bufferincmessageresult[1];
