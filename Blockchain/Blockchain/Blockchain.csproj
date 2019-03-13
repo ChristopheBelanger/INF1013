@@ -46,10 +46,10 @@
     <Compile Include="Block.cs" />
     <Compile Include="Blockchain.cs" />
     <Compile Include="Transaction.cs" />
-    <Compile Include="ServeurNoeud.cs" />
-    <Compile Include="ClientNoeud.cs" />
+    <Compile Include="NodeServer.cs" />
+    <Compile Include="NodeClient.cs" />
     <Compile Include="Properties\Settings.cs" />
-    <Compile Include="Noeud.cs" />
+    <Compile Include="Node.cs" />
     <Compile Include="AddresseIP.cs" />
   </ItemGroup>
   <ItemGroup>

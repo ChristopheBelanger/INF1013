@@ -5,20 +5,20 @@ using System.Text;
 
 namespace Blockchain
 {
-    public class Noeud
+    public class Node
     {
-        IList<Transaction> transactionsEnAttente;
-        IList<Transaction> transactionsEnTraitement;
+        IList<Transaction> untreatedTransactions;
+        IList<Transaction> pendingTransactions;
         IList<String> addressesNoeuds;
-        ServeurNoeud serveur;
+        NodeServer serveur;
         TcpClient clientService;
         NetworkStream clientServiceStream;
         Blockchain blockchain;
 
-        public Noeud(AddresseIP addresseService)
+        public Node(AddresseIP addresseService)
         {
-            transactionsEnAttente = new List<Transaction>();
-            transactionsEnTraitement = new List<Transaction>();
+            untreatedTransactions = new List<Transaction>();
+            pendingTransactions = new List<Transaction>();
             addressesNoeuds = new List<String>();
 
             // connexion au service, obtenir liste des autres noeuds et des transactions non traitees
@@ -55,18 +55,18 @@ namespace Blockchain
             Run();
         }
 
-        public Noeud(AddresseIP addresseService, AddresseIP addresseNoeud)
+        public Node(AddresseIP addresseService, AddresseIP addresseNoeud)
         {
-            transactionsEnAttente = new List<Transaction>();
-            transactionsEnTraitement = new List<Transaction>();
+            untreatedTransactions = new List<Transaction>();
+            pendingTransactions = new List<Transaction>();
             clientService = new TcpClient(addresseService.ip, addresseService.port);
-            serveur = new ServeurNoeud(blockchain, addresseNoeud.ip, addresseNoeud.port);
+            serveur = new NodeServer(blockchain, addresseNoeud.ip, addresseNoeud.port);
             Run();
         }
 
         public void Run()
         {
-            serveur = new ServeurNoeud(blockchain);
+            serveur = new NodeServer(blockchain);
         }
     }
 }
