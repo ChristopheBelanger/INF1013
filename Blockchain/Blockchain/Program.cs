@@ -39,11 +39,11 @@ namespace Blockchain
             blockchain = new Blockchain();
             if (Array.Find(args, s => s.Equals("-s"))!=null)
             {
-                ServeurNoeud nodeServer = new ServeurNoeud(blockchain);
+                NodeServer nodeServer = new NodeServer(blockchain);
                 nodeServer.Start();
             }else if(Array.Find(args, s => s.Equals("-c")) != null)
             {
-                ClientNoeud nodeClient = new ClientNoeud(blockchain);
+                NodeClient nodeClient = new NodeClient(blockchain);
                 nodeClient.Start();
             }
 

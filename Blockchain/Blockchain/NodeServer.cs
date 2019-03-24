@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace Blockchain
 {
-    public class ServeurNoeud
+    public class NodeServer
     {
         private TcpListener tcpListener;
         private Thread listenThread;
@@ -16,18 +16,18 @@ namespace Blockchain
         Blockchain blockchain;
         bool listen = true;
 
-        public ServeurNoeud(Blockchain blockchain, String ip, int port)
+        public NodeServer(Blockchain blockchain, String ip, int port)
         {
             this.ip = ip;
             this.port = port;
             this.blockchain = blockchain;
         }
-        public ServeurNoeud(Blockchain blockchain, int port)
+        public NodeServer(Blockchain blockchain, int port)
         {
             this.port = port;
             this.blockchain = blockchain;
         }
-        public ServeurNoeud(Blockchain blockchain)
+        public NodeServer(Blockchain blockchain)
         {
             this.blockchain = blockchain;
         }

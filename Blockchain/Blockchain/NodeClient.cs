@@ -5,20 +5,20 @@ using System.Text;
 
 namespace Blockchain
 {
-    public class ClientNoeud
+    public class NodeClient
     {
         private TcpClient client;
         String ip { get; set; } = "127.0.0.1";
         int port { get; set; } = 8080;
         Blockchain blockchain;
 
-        public ClientNoeud(Blockchain blockchain, String ip, int port)
+        public NodeClient(Blockchain blockchain, String ip, int port)
         {
             this.ip = ip;
             this.port = port;
             this.blockchain = blockchain;
         }
-        public ClientNoeud(Blockchain blockchain)
+        public NodeClient(Blockchain blockchain)
         {
             this.blockchain = blockchain;
         }
