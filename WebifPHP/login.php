@@ -9,7 +9,6 @@
 
 <!-- JQUERY -->
 <script type="text/javascript" language="javascript" src="jquery/jquery.js"></script>
-
 <link href="style/style.css" rel="stylesheet" type="text/css" media="all"/>
 <script type="text/javascript" language="javascript" src="style/style.js"></script>
 

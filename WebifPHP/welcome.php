@@ -10,8 +10,8 @@
 
 <!-- JQUERY -->
 <script type="text/javascript" language="javascript" src="jquery/jquery.js"></script>
-<link href="style/style.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="style/cover.css" rel="stylesheet">
+<link href="style/style.css" rel="stylesheet" type="text/css" media="all"/>
 
 </head>
 
@@ -33,13 +33,15 @@
 
 <div class="bg">
 	<div class="container">
-      <main role="main" class="inner cover">
-        <h1 class="cover-heading">Cover your page.</h1>
-        <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
-        <p class="lead">
-          <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
-        </p>
-      </main>
+		<div>
+		  <main role="main" class="inner cover">
+			<h1 class="cover-heading">Cover your page.</h1>
+			<p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
+			<p class="lead">
+			  <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
+			</p>
+		  </main>
+		</div>
 	</div>
 </div>
 </body>

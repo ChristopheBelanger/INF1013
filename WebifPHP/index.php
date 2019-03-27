@@ -29,8 +29,8 @@ IF(ISSET($_SESSION['name'])){
       <!--  <li class="active"><a href="#">Accueil</a></li> -->
     </ul>
     <ul class="nav navbar-nav navbar-right">	
-	  <li><a href="account.php"><span class="glyphicon glyphicon-log-in"></span> <?=$_SESSION['name'];?> </a></li>
-      <li><a href="logout.php?destroy"><span class="glyphicon glyphicon-user"></span> Déconnexion </a></li>
+	  <li><a href="account.php"><span class="glyphicon glyphicon-user"></span> <?=$_SESSION['name'];?> </a></li>
+      <li><a href="logout.php?destroy"><span class="glyphicon glyphicon-log-out"></span> Déconnexion </a></li>
 	</ul>
   </div>
 </nav>
