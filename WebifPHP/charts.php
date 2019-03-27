@@ -60,12 +60,11 @@ IF(ISSET($_SESSION['name'])){
       </ul>
       <ul class="navbar-nav ml-auto">
 	    <li class="nav-item">
-			<a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-				<i class="fa fa-fw fa-user"></i> <?=$_SESSION['name'];?> </a>
-			
+			<a class="nav-link" href="account.php">
+				<i class="fa fa-fw fa-user"></i> <?=$_SESSION['name'];?> </a>	
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+          <a class="nav-link" href="logout.php?destroy">
             <i class="fa fa-fw fa-sign-out"></i> Déconnexion</a>
         </li>
       </ul>
@@ -76,9 +75,9 @@ IF(ISSET($_SESSION['name'])){
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">Dashboard</a>
+          <a href="#">Compte</a>
         </li>
-        <li class="breadcrumb-item active">Charts</li>
+        <li class="breadcrumb-item active">Graphique des transactions</li>
       </ol>
       <!-- Area Chart Example-->
       <div class="card mb-3">

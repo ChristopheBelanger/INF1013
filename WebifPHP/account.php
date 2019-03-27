@@ -60,12 +60,11 @@ IF(ISSET($_SESSION['name'])){
       </ul>
       <ul class="navbar-nav ml-auto">
 	    <li class="nav-item">
-			<a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-				<i class="fa fa-fw fa-user"></i> <?=$_SESSION['name'];?> </a>
-			
+			<a class="nav-link" href="account.php">
+				<i class="fa fa-fw fa-user"></i> <?=$_SESSION['name'];?> </a>	
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+          <a class="nav-link" href="logout.php?destroy">
             <i class="fa fa-fw fa-sign-out"></i> Déconnexion</a>
         </li>
       </ul>
@@ -76,14 +75,16 @@ IF(ISSET($_SESSION['name'])){
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="index.php">Dashboard</a>
+          <a href="index.php">Compte</a>
         </li>
-        <li class="breadcrumb-item active">Blank Page</li>
+        <li class="breadcrumb-item active">Porte feuille</li>
       </ol>
       <div class="row">
         <div class="col-12">
-          <h1>Blank</h1>
+        <!--  
+		<h1>Blank</h1>
           <p>This is an example of a blank page that you can use as a starting point for creating new ones.</p>
+		  -->
         </div>
       </div>
     </div>
@@ -110,10 +111,10 @@ IF(ISSET($_SESSION['name'])){
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-body">Cliquer sur "Déconnexion" pour quitter votre compte.</div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Canceller</button>
+            <a class="btn btn-primary" href="welcome.php">Déconnexion</a>
           </div>
         </div>
       </div>
