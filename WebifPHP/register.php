@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-<title>Welcome</title>
+<title>BITtruq Enregistrement</title>
 <!-- bootstrap-3.3.7 -->
 <link rel="stylesheet" href="bootstrap-3.3.7/css/bootstrap.min.css">
 <script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -44,7 +44,6 @@
 					try{
 						// load database connection and password hasher library
 						require 'db_con.php';
-						require 'PasswordHash.php';
 						 
 						/* 
 						 * -prepare password to be saved
@@ -67,7 +66,9 @@
 			 
 						// execute the query
 						if($stmt->execute()){
-							echo "<div>Successful registration.</div>";
+							echo "<div>Enregistrement réussi.</div>";
+							sleep(1);
+							header('Location:index.php'); 
 						}else{
 							echo "<div>Unable to register. <a href='register.php'>Please try again.</a></div>";
 						}

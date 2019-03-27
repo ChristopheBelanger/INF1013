@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-<title>Welcome</title>
+<title>Bienvenu sur BITtruq</title>
 <!-- bootstrap-3.3.7 -->
 <link rel="stylesheet" href="bootstrap-3.3.7/css/bootstrap.min.css">
 <script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>

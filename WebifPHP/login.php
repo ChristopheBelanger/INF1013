@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Bootstrap Login</title>
+<title>BITtruq Connexion</title>
 
 <!-- bootstrap-3.3.7 -->
 <link rel="stylesheet" href="bootstrap-3.3.7/css/bootstrap.min.css">
@@ -67,9 +67,10 @@ IF(ISSET($_POST['login'])){
 		if(password_verify($password, $data["password"]))  
 		{  
 		  //return true;  
-		  session_start();
+		session_start();
 		$_SESSION['email'] = $data['email'];
 		$_SESSION['name'] = $data['full_name'];
+		$_SESSION['wallet'] = $data['wallet'];
 		header('Location:index.php');  
 		}  
 		else  
