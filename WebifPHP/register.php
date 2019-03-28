@@ -67,12 +67,13 @@
 						// execute the query
 						if($stmt->execute()){
 							echo "<div>Enregistrement réussi.</div>";
-							sleep(1);
-							header('Location:index.php'); 
+							session_start();
+							$_SESSION['email'] = $_POST['email'];
+							$_SESSION['name'] = $_POST['user'];
+						 	header('Location:index.php');
 						}else{
 							echo "<div>Unable to register. <a href='register.php'>Please try again.</a></div>";
 						}
-						 
 					}
 					 
 					//to handle error

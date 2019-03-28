@@ -2,10 +2,8 @@
 session_start();
 IF(ISSET($_SESSION['name'])){
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,7 +16,11 @@ IF(ISSET($_SESSION['name'])){
   <!-- Custom fonts for this template-->
   <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
+  <script src="js/jquery.table2excel.js"></script>
   <link href="css/sb-admin.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+  <script src="js/script.js"></script>
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -83,29 +85,29 @@ IF(ISSET($_SESSION['name'])){
       <div class="card mb-3">
         <div class="card-header">
           <i class="fa fa-table"></i> Tableau des transactions
-			<a class="btn btn-primary pull-right" href="#" role="button">Exporter au format XLS</a>
+			<button id="btn-export" type="button" class="btn btn-primary pull-right">Exporter au format XLS</button>
 		  </div>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Office</th>
-                  <th>Age</th>
-                  <th>Start date</th>
-                  <th>Salary</th>
+                  <th>Id</th>
+                  <th>Action</th>
+                  <th>Porte feuille</th>
+                  <th>Montant</th>
+                  <th>Date</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tfoot>
                 <tr>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Office</th>
-                  <th>Age</th>
-                  <th>Start date</th>
-                  <th>Salary</th>
+                  <th>Id</th>
+                  <th>Action</th>
+                  <th>Porte feuille</th>
+                  <th>Montant</th>
+                  <th>Date</th>
+                  <th>Status</th>
                 </tr>
               </tfoot>
               <tbody>

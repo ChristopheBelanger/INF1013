@@ -84,9 +84,20 @@ IF(ISSET($_SESSION['name'])){
 		
 		<?php 
 		IF(ISSET($_SESSION['wallet'])) {
-			echo "<p>Numero de porte feuille: " . $_SESSION['wallet'] . "</p>" ;
+			echo "
+			<p>Numéro de porte feuille: " . $_SESSION['wallet'] . "</p>
+			<p>Solde du porte feuille: " . "1000" . " BITtruq.</p>
+			";
 		} else {
-			echo "<p>Aucun porte feuille configuré pour ce compte</p>";
+			echo "
+			<p>Aucun porte feuille configuré pour ce compte.</p>
+			<br>
+			<p>Cliquer sur le bouton pour obtenir un porte feuille BITtruq.</p>
+			<div class=\"col-md-5 col-sm-5 col-xs-12 gutter\">
+                <a class='btn btn-primary' href='getWallet.php' role='button'>Obtenir un Porte feuille</a>
+            </div>
+			
+			";
 		} ?>
         <!--  
 		<h1>Blank</h1>
