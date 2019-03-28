@@ -28,7 +28,7 @@ IF(ISSET($_SESSION['name'])){
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
+    <div class="collapse in navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
 	    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Account">
           <a class="nav-link" href="account.php">
@@ -37,16 +37,16 @@ IF(ISSET($_SESSION['name'])){
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
+          <a class="nav-link nav-link-collapse" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">Transactions</span>
           </a>
-          <ul class="sidenav-second-level collapse" id="collapseExamplePages">
+          <ul class="sidenav-second-level" id="collapseExamplePages">
             <li>
-              <a href="tables.php">Tableau</a>
+              <a href="tables.php">  Tableau</a>
             </li>
             <li>
-              <a href="charts.php">Graphique</a>
+              <a href="charts.php">  Graphique</a>
             </li>
           </ul>
         </li>
@@ -82,7 +82,7 @@ IF(ISSET($_SESSION['name'])){
       <!-- Area Chart Example-->
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-area-chart"></i> Area Chart Example</div>
+          <i class="fa fa-area-chart"></i> Graphique des transactions</div>
         <div class="card-body">
           <canvas id="myAreaChart" width="100%" height="30"></canvas>
         </div>

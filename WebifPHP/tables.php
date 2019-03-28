@@ -37,16 +37,16 @@ IF(ISSET($_SESSION['name'])){
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
+          <a class="nav-link nav-link-collapse" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">Transactions</span>
           </a>
-          <ul class="sidenav-second-level collapse" id="collapseExamplePages">
+          <ul class="sidenav-second-level" id="collapseExamplePages">
             <li>
-              <a href="tables.php">Tableau</a>
+              <a href="tables.php">  Tableau</a>
             </li>
             <li>
-              <a href="charts.php">Graphique</a>
+              <a href="charts.php">  Graphique</a>
             </li>
           </ul>
         </li>
@@ -82,7 +82,9 @@ IF(ISSET($_SESSION['name'])){
       <!-- Example DataTables Card-->
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-table"></i> Data Table Example</div>
+          <i class="fa fa-table"></i> Tableau des transactions
+			<a class="btn btn-primary pull-right" href="#" role="button">Exporter au format XLS</a>
+		  </div>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
