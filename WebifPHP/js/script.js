@@ -1,6 +1,7 @@
 $(document).ready(function(){
   var table = $('#dataTable').DataTable( {
-			"aLengthMenu": [[25, 50, 75, -1], [25, 50, 75, "All"]],
+			"paging": false,
+			"searching": false,
 			"iDisplayLength": -1
   });
   
