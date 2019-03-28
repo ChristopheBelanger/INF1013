@@ -51,7 +51,7 @@
 </body>
 </html>
 <?php
-// load database connection cnfig file
+// load database connection config file
 require 'db_con.php';
 
 IF(ISSET($_POST['login'])){
@@ -61,6 +61,7 @@ IF(ISSET($_POST['login'])){
 	$result = mysqli_query($con, "SELECT * FROM users WHERE email='$email'");
 	$cek = $result->num_rows;
 	$data = mysqli_fetch_array(mysqli_query($con,"SELECT * FROM users WHERE email='$email'"));
+	
 	IF($cek > 0)
 	{
 		

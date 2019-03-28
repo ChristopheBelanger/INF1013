@@ -81,11 +81,12 @@ IF(ISSET($_SESSION['name'])){
       </ol>
       <div class="row">
         <div class="col-12">
-		<?php if($_SESSION['wallet'] = NULL) {
-			echo "<p>Aucun porte feuille configuré pour ce compte</p>";
+		
+		<?php 
+		IF(ISSET($_SESSION['wallet'])) {
+			echo "<p>Numero de porte feuille: " . $_SESSION['wallet'] . "</p>" ;
 		} else {
-			$wallet = $_SESSION['wallet'];
-			echo "<p>Numero de porte feuille: $wallet</p>";
+			echo "<p>Aucun porte feuille configuré pour ce compte</p>";
 		} ?>
         <!--  
 		<h1>Blank</h1>
