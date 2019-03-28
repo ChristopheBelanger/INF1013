@@ -89,7 +89,7 @@ IF(ISSET($_SESSION['name'])){
 		  </div>
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-bordered data-page-length='-1'" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
                   <th>Id</th>
@@ -100,16 +100,6 @@ IF(ISSET($_SESSION['name'])){
                   <th>Status</th>
                 </tr>
               </thead>
-              <tfoot>
-                <tr>
-                  <th>Id</th>
-                  <th>Action</th>
-                  <th>Porte feuille</th>
-                  <th>Montant</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                </tr>
-              </tfoot>
               <tbody>
                 <tr>
                   <td>Tiger Nixon</td>
