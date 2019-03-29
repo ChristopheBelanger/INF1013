@@ -6,6 +6,7 @@ IF(ISSET($_SESSION['name'])){
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="refresh" content="30"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -112,7 +113,7 @@ IF(ISSET($_SESSION['name'])){
 
 					$obj = json_decode($result);
 					$elementCount  = count($obj->transactions);
-
+					$solde = 0;
 					for($i = 0; $i < $elementCount; $i++) {
 						echo "<tr>";	
 						  echo "<td>" . $obj->transactions[$i]->Id . "</td>";
@@ -122,13 +123,25 @@ IF(ISSET($_SESSION['name'])){
 						  echo "<td>" . $obj->transactions[$i]->Date . "</td>";
 						  echo "<td>" . $obj->transactions[$i]->Status . "</td>";
 						echo "</tr>";
+						if($obj->transactions[$i]->Action == "send to"){
+							$solde -= $obj->transactions[$i]->Montant;
+						} else {
+							$solde += $obj->transactions[$i]->Montant;
+						}
 					}
 				?>
               </tbody>
             </table>
           </div>
         </div>
-        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        <div class="card-footer small text-muted">
+		<?php 
+			date_default_timezone_set('America/New_York');
+			$today = date("d-m-Y"); 
+			$time = date("H:i:s");
+			echo "Derniere mise a jour le: " . $today . " a " . $time;  
+		?>
+  </div>
       </div>
     </div>
     <!-- Bootstrap core JavaScript-->

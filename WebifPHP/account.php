@@ -8,6 +8,7 @@ IF(ISSET($_SESSION['name'])){
 
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="refresh" content="30"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -84,9 +85,33 @@ IF(ISSET($_SESSION['name'])){
 		
 		<?php 
 		IF(ISSET($_SESSION['wallet'])) {
+					$url='http://localhost/inf1013/WebifPHP/transactions.json';
+					$ch = curl_init();
+					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+					curl_setopt($ch, CURLOPT_URL, $url);
+					$result = curl_exec($ch);
+					curl_close($ch);
+
+					$obj = json_decode($result);
+					$elementCount  = count($obj->transactions);
+					$solde = 0;
+					for($i = 0; $i < $elementCount; $i++) {
+						if($obj->transactions[$i]->Action == "send to"){
+							$solde -= $obj->transactions[$i]->Montant;
+						} else {
+							$solde += $obj->transactions[$i]->Montant;
+						}
+					}
+					if($solde > 1){
+						$BITtruq = "BITtruqs";
+					} else {
+						$BITtruq = "BITtruq";
+					}
+
 			echo "
-			<p>Numéro de porte feuille: " . $_SESSION['wallet'] . "</p>
-			<p>Solde du porte feuille: " . "1000" . " BITtruq.</p>
+			<p>Numéro de porte feuille: <strong>" . $_SESSION['wallet'] . "</strong></p>
+			<p>Solde du porte feuille: <strong>" . $solde . "</strong> " . $BITtruq . "</p>
 			";
 		} else {
 			echo "
