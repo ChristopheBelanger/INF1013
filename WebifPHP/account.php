@@ -1,4 +1,5 @@
 <?php 
+include 'urls.php';
 session_start();
 IF(ISSET($_SESSION['name'])){
 ?>
@@ -78,11 +79,10 @@ IF(ISSET($_SESSION['name'])){
 		
 		<?php 
 		IF(ISSET($_SESSION['wallet'])) {
-					$url='http://localhost/inf1013/WebifPHP/transactions.json';
 					$ch = curl_init();
 					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-					curl_setopt($ch, CURLOPT_URL, $url);
+					curl_setopt($ch, CURLOPT_URL, $TRANSACTIONS_URL);
 					$result = curl_exec($ch);
 					curl_close($ch);
 

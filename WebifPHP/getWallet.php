@@ -1,4 +1,5 @@
 <?php 
+include 'urls.php';
 session_start();
 
 // load database connection config file
@@ -6,8 +7,7 @@ require 'db_con.php';
 
 //get the wallet from the API
 
-$url='http://localhost/inf1013/WebifPHP/wallet.php';
-$ch = curl_init($url);
+$ch = curl_init($WALLET_URL);
 curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
 curl_setopt($ch,CURLOPT_TIMEOUT,10);
 $wallet = curl_exec($ch);
