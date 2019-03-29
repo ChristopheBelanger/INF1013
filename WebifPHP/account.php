@@ -37,26 +37,19 @@ IF(ISSET($_SESSION['name'])){
             <span class="nav-link-text">Compte</span>
           </a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Transactions">
+          <a class="nav-link nav-link-collapse" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">Transactions</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseExamplePages">
             <li>
-              <a href="tables.php">Tableau</a>
+              <a href="tables.php" class="nav-link-text">Tableau</a>
             </li>
             <li>
-              <a href="charts.php">Graphique</a>
+              <a href="charts.php" class="nav-link-text">Graphique</a>
             </li>
           </ul>
-        </li>
-      </ul>
-      <ul class="navbar-nav sidenav-toggler">
-        <li class="nav-item">
-          <a class="nav-link text-center" id="sidenavToggler">
-            <i class="fa fa-fw fa-angle-left"></i>
-          </a>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
