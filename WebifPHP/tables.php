@@ -1,6 +1,5 @@
 <?php 
 include 'urls.php';
-session_start();
 IF(ISSET($_SESSION['name'])){
 ?>
 <!DOCTYPE html>

@@ -1,5 +1,5 @@
 <?php 
-session_start();
+include 'urls.php';
 IF(ISSET($_SESSION['name'])){
 ?>
 
