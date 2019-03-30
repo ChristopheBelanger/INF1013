@@ -19,7 +19,7 @@ IF(ISSET($_SESSION['name'])){
   <!-- Custom fonts for this template-->
   <link href="framework/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
-  <script src="jquery/jquery.table2excel.js"></script>
+  <script src="framework/jquery/jquery.table2excel.js"></script>
   <link href="css/sb-admin.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.7/framework/js/jquery.dataTables.min.js"></script>
