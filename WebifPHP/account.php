@@ -102,8 +102,49 @@ IF(ISSET($_SESSION['name'])){
 					}
 
 			echo "
-			<p>Numéro de porte feuille: <strong>" . $_SESSION['wallet'] . "</strong></p>
-			<p>Solde du porte feuille: <strong>" . $solde . "</strong> " . $BITtruq . "</p>
+			
+			<div role=\"tabpanel\" class=\"tab-pane active container-fluid\" id=\"home\">
+				<div class=\"row\">
+					<div class=\"col-md-8\"><div class=\"panel panel-default\">
+					<div class=\"panel-heading\">Numéro de porte feuille</div>
+					<div class=\"panel-body\">
+						<p><center><strong><big>" . $_SESSION['wallet'] . "</big></strong></center></p>
+					</div>
+				</div>
+			</div>
+				<div class=\"col-md-4\"><div class=\"panel panel-default\">
+					<div class=\"panel-heading\">Solde du porte feuille</div>
+					<div class=\"panel-body\">
+						<p><center><big><strong>" . $solde . "</strong>  " . $BITtruq . "</big></center></p>
+					</div>
+			</div></div></div></div>
+			
+			<!-- second row *************************************************************************************** -->
+			
+			<div role=\"tabpanel\" class=\"tab-pane active container-fluid\" id=\"home\">
+				<div class=\"row\">
+					<div class=\"col-md-12\"><div class=\"panel panel-default\">
+						<div class=\"panel-heading\">Transferts</div>
+					<div class=\"panel-body\">
+					<div class=\"form-row\">
+						<div class=\"col-md-8 mb-3 text-center\">
+						<br>
+						  <input type=\"text\" class=\"form-control\" id=\"validationCustom03\" placeholder=\"Numero de portefeuille\" required>
+						</div>
+						<div class=\"col-md-2 mb-3 text-center\">
+						<br>
+						  <input type=\"text\" class=\"form-control\" id=\"validationCustom04\" placeholder=\"Montant\" required>
+						</div>
+						<div class=\"col-md-2 mb-3 text-center\">
+						<br>
+							<a class=\"btn btn-primary pull-center\" href=\"#\" role=\"button\">Transferer</a>
+
+						</div>
+					  </div>
+					</div>
+				</div>
+			</div></div></div></div>
+			
 			";
 		} else {
 			echo "
@@ -113,7 +154,6 @@ IF(ISSET($_SESSION['name'])){
 			<div class=\"col-md-5 col-sm-5 col-xs-12 gutter\">
                 <a class='btn btn-primary' href='getWallet.php' role='button'>Obtenir un Porte feuille</a>
             </div>
-			
 			";
 		} ?>
         <!--  

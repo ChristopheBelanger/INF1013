@@ -115,11 +115,6 @@ IF(ISSET($_SESSION['name'])){
 						  echo "<td>" . $obj->transactions[$i]->Date . "</td>";
 						  echo "<td>" . $obj->transactions[$i]->Status . "</td>";
 						echo "</tr>";
-						if($obj->transactions[$i]->Action == "send to"){
-							$solde -= $obj->transactions[$i]->Montant;
-						} else {
-							$solde += $obj->transactions[$i]->Montant;
-						}
 					}
 				?>
               </tbody>

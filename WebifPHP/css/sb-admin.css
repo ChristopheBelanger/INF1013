@@ -19,6 +19,29 @@ body.fixed-nav {
   padding-top: 56px;
 }
 
+
+element.style {
+}
+
+.form-row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.panel-default {
+    border-color: #f5f5f5;
+}
+.panel{margin-bottom:20px;background-color:#fff;border:1px solid;border-color:#f5f5f5;border-radius:4px;-webkit-box-shadow:0 1px 1px rgba(0,0,0,.05);box-shadow:0 1px 1px rgba(0,0,0,.05)}
+.panel-body{margin-left: 15px;border-color: #f5f5f5}
+.panel2-body{margin-left: 15px;border-color: #f5f5f5;margin-right: 15px;
+}
+.panel-heading{padding:10px 15px;border-bottom:1px solid transparent;border-top-left-radius:3px;border-top-right-radius:3px}
+.panel-default>.panel-heading{color:#333;background-color:#f5f5f5;border-color:#f5f5f5}.panel-default>.panel-heading+.panel-collapse>.panel-body{border-top-color:#ddd}
+.panel-default>.panel-heading .badge{color:#f5f5f5;background-color:#333}.panel-default>.panel-footer+.panel-collapse>.panel-body{border-bottom-color:#ddd}
+ 
 .content-wrapper {
   min-height: calc(100vh - 56px);
   padding-top: 1rem;
