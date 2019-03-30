@@ -1,5 +1,5 @@
 <?php 
-include 'urls.php';
+include 'include/urls.php';
 IF(ISSET($_SESSION['name'])){
 ?>
 
@@ -15,11 +15,15 @@ IF(ISSET($_SESSION['name'])){
   <meta name="author" content="">
   <title>Compte BITtruq</title>
   <!-- Bootstrap core CSS-->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="framework/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
-  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="framework/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
+  <script src="jquery/jquery.table2excel.js"></script>
   <link href="css/sb-admin.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.7/framework/js/jquery.dataTables.min.js"></script>
+  <script src="framework/js/sb-admin-table2excel.js"></script>
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -34,23 +38,10 @@ IF(ISSET($_SESSION['name'])){
 	    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Account">
           <a class="nav-link" href="account.php">
             <i class="fa fa-fw fa-dashboard"></i>
-            <span class="nav-link-text">Compte</span>
+            <span class="nav-link-text">Tableau de bord</span>
           </a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Transactions">
-          <a class="nav-link nav-link-collapse" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-file"></i>
-            <span class="nav-link-text">Transactions</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseExamplePages">
-            <li>
-              <a href="tables.php" class="nav-link-text">Tableau</a>
-            </li>
-            <li>
-              <a href="charts.php" class="nav-link-text">Graphique</a>
-            </li>
-          </ul>
-        </li>
+
       </ul>
       <ul class="navbar-nav ml-auto">
 	    <li class="nav-item">
@@ -101,8 +92,7 @@ IF(ISSET($_SESSION['name'])){
 						$BITtruq = "BITtruq";
 					}
 
-			echo "
-			
+			echo "			
 			<div role=\"tabpanel\" class=\"tab-pane active container-fluid\" id=\"home\">
 				<div class=\"row\">
 					<div class=\"col-md-8\"><div class=\"panel panel-default\">
@@ -143,8 +133,56 @@ IF(ISSET($_SESSION['name'])){
 					  </div>
 					</div>
 				</div>
-			</div></div></div></div>
+			</div></div>
 			
+			
+			      <!-- Example DataTables Card-->
+      <div class=\"card mb-3\">
+        <div class=\"card-header\">
+          <i class=\"fa fa-table\"></i> Tableau des transactions
+			<button id=\"btn-export\" type=\"button\" class=\"btn btn-light pull-right\">Exporter au format XLS </button>
+		  </div>
+        <div class=\"card-body\">
+          <div class=\"table-responsive\">
+            <table class=\"table table-bordered data-page-length='-1'\" id=\"dataTable\" width=\"100%\" cellspacing=\"0\">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Action</th>
+                  <th>Porte feuille</th>
+                  <th>Montant</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>";
+			  
+					for($i = $elementCount - 1; $i > -1; $i--) {
+						echo "<tr>";	
+						  echo "<td>" . $obj->transactions[$i]->Id . "</td>";
+						  echo "<td>" . $obj->transactions[$i]->Action . "</td>";
+						  echo "<td>" . $obj->transactions[$i]->Portefeuille . "</td>";
+						  echo "<td>" . $obj->transactions[$i]->Montant . "</td>";
+						  echo "<td>" . $obj->transactions[$i]->Date . "</td>";
+						  echo "<td>" . $obj->transactions[$i]->Status . "</td>";
+						echo "</tr>";
+					} 
+					
+					echo "
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class=\"card-footer small text-muted\">
+		"; 
+			date_default_timezone_set('America/New_York');
+			$today = date("d-m-Y"); 
+			$time = date("H:i:s");
+			echo "Derniere mise a jour le: " . $today . " a " . $time;  
+		echo "
+  </div>
+      </div>
+    </div></div></div>
 			";
 		} else {
 			echo "
@@ -152,24 +190,25 @@ IF(ISSET($_SESSION['name'])){
 			<br>
 			<p>Cliquer sur le bouton pour obtenir un porte feuille BITtruq.</p>
 			<div class=\"col-md-5 col-sm-5 col-xs-12 gutter\">
-                <a class='btn btn-primary' href='getWallet.php' role='button'>Obtenir un Porte feuille</a>
+                <a class='btn btn-primary' href='include/getWallet.php' role='button'>Obtenir un Porte feuille</a>
             </div>
 			";
 		} ?>
-        <!--  
-		<h1>Blank</h1>
-          <p>This is an example of a blank page that you can use as a starting point for creating new ones.</p>
-		  -->
         </div>
       </div>
     </div>
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="framework/jquery/jquery.min.js"></script>
+    <script src="framework/bootstrap/framework/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="framework/jquery-easing/jquery.easing.min.js"></script>
+	<!-- Page level plugin JavaScript-->
+    <script src="framework/datatables/jquery.dataTables.js"></script>
+    <script src="framework/datatables/dataTables.bootstrap4.js"></script>
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin.min.js"></script>
+    <script src="framework/js/sb-admin.min.js"></script>
+	    <!-- Custom scripts for this page-->
+    <script src="framework/js/sb-admin-datatables.min.js"></script>
   </div>
 </body>
 

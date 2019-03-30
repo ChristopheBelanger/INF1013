@@ -4,14 +4,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
 <title>BITtruq Enregistrement</title>
-<!-- bootstrap-3.3.7 -->
-<link rel="stylesheet" href="bootstrap-3.3.7/css/bootstrap.min.css">
-<script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<!-- framework/bootstrap-3.3.7 -->
+<link rel="stylesheet" href="framework/bootstrap-3.3.7/css/bootstrap.min.css">
+<script src="framework/bootstrap-3.3.7/framework/js/bootstrap.min.js"></script>
 
 <!-- JQUERY -->
 <script type="text/javascript" language="javascript" src="jquery/jquery.js"></script>
-<link href="style/style.css" rel="stylesheet" type="text/css" media="all"/>
-<link type="text/css" rel="stylesheet" href="style/register.css" />
+<link href="css/sb-admin-style.css" rel="stylesheet" type="text/css" media="all"/>
+<link type="text/css" rel="stylesheet" href="css/sb-admin-resister.css" />
 </head>
 
 <body>
@@ -43,7 +43,7 @@
 				 
 					try{
 						// load database connection and password hasher library
-						require 'db_con.php';
+						require 'include/db_con.php';
 						 
 						/* 
 						 * -prepare password to be saved

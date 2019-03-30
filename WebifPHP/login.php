@@ -3,13 +3,13 @@
 <head>
 <title>BITtruq Connexion</title>
 
-<!-- bootstrap-3.3.7 -->
-<link rel="stylesheet" href="bootstrap-3.3.7/css/bootstrap.min.css">
-<script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<!-- framework/bootstrap-3.3.7 -->
+<link rel="stylesheet" href="framework/bootstrap-3.3.7/css/bootstrap.min.css">
+<script src="framework/bootstrap-3.3.7/framework/js/bootstrap.min.js"></script>
 
 <!-- JQUERY -->
 <script type="text/javascript" language="javascript" src="jquery/jquery.js"></script>
-<link href="style/style.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="css/sb-admin-style.css" rel="stylesheet" type="text/css" media="all"/>
 <script type="text/javascript" language="javascript" src="style/style.js"></script>
 
 </head>
@@ -52,7 +52,7 @@
 </html>
 <?php
 // load database connection config file
-require 'db_con.php';
+require 'include/db_con.php';
 
 IF(ISSET($_POST['login'])){
 	$email = $_POST['email'];

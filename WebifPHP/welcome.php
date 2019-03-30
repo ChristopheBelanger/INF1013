@@ -4,14 +4,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
 <title>Bienvenu sur BITtruq</title>
-<!-- bootstrap-3.3.7 -->
-<link rel="stylesheet" href="bootstrap-3.3.7/css/bootstrap.min.css">
-<script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<!-- framework/bootstrap-3.3.7 -->
+<link rel="stylesheet" href="framework/bootstrap-3.3.7/css/bootstrap.min.css">
+<script src="framework/bootstrap-3.3.7/framework/js/bootstrap.min.js"></script>
 
 <!-- JQUERY -->
 <script type="text/javascript" language="javascript" src="jquery/jquery.js"></script>
-<link href="style/cover.css" rel="stylesheet">
-<link href="style/style.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="css/sb-admin-cover.css" rel="stylesheet">
+<link href="css/sb-admin-style.css" rel="stylesheet" type="text/css" media="all"/>
 
 </head>
 

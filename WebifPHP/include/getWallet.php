@@ -21,7 +21,7 @@ if ($con->query($sql) === TRUE)
 	{
 		//Success
 		$_SESSION['wallet'] = $wallet;
-		header('Location:index.php'); 
+		header('Location:../index.php'); 
 	}else{
 		//Error
 		echo "<div>Unable to register your wallet.</div>";
