@@ -57,13 +57,6 @@ IF(ISSET($_SESSION['name'])){
   </nav>
   <div class="content-wrapper">
     <div class="container-fluid">
-      <!-- Breadcrumbs-->
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="index.php">Compte</a>
-        </li>
-        <li class="breadcrumb-item active">Porte feuille</li>
-      </ol>
       <div class="row">
         <div class="col-12">
 		
