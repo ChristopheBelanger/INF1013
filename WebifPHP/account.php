@@ -116,21 +116,24 @@ IF(ISSET($_SESSION['name'])){
 					<div class=\"col-md-12\"><div class=\"panel panel-default\">
 						<div class=\"panel-heading\">Transferts</div>
 					<div class=\"panel-body\">
+					<form action=\"\" method=\"post\">
 					<div class=\"form-row\">
 						<div class=\"col-md-8 mb-3 text-center\">
 						<br>
-						  <input type=\"text\" class=\"form-control\" id=\"validationCustom03\" placeholder=\"Numero de portefeuille\" required>
+						  <input type=\"text\" class=\"form-control\" id=\"sendTo\" placeholder=\"Numero de portefeuille\" required>
 						</div>
 						<div class=\"col-md-2 mb-3 text-center\">
 						<br>
-						  <input type=\"text\" class=\"form-control\" id=\"validationCustom04\" placeholder=\"Montant\" required>
+						  <input type=\"text\" class=\"form-control\" id=\"montant\" placeholder=\"Montant\" required>
 						</div>
 						<div class=\"col-md-2 mb-3 text-center\">
 						<br>
-							<a class=\"btn btn-primary pull-center\" href=\"#\" role=\"button\">Transferer</a>
-
+							<input type=\"button\" class=\"btn btn-primary pull-center\" onclick=\"window.location.href = '";
+							echo $TRANSFER_URL;
+							echo "'\" value= \"Transferer\"/>
 						</div>
 					  </div>
+					  </form>
 					</div>
 				</div>
 			</div></div>
