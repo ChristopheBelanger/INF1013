@@ -22,7 +22,7 @@ namespace WebService.Controllers
 
         // POST api/Transaction
         [HttpPost]
-        public void Post([FromBody] long[] txId)
+        public void Post([FromBody] int[] txId)
         {
             TransactionPool.FinishTx(txId);
         }

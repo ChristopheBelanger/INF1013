@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebService.Database;
 using WebService.Models;
 
 namespace WebService.Containers
@@ -9,7 +10,7 @@ namespace WebService.Containers
     public static class TransactionPool
     {
         private static object TransactionLock = new object();
-        static long NextTxId = 0;
+        static int NextTxId = 0;
         static List<Transaction> TxPool = new List<Transaction>();
         static List<Transaction> PendingTx = new List<Transaction>();
 
@@ -22,7 +23,7 @@ namespace WebService.Containers
             }
         }
 
-        public static void FinishTx(long[] id)
+        public static void FinishTx(int[] id)
         {
             var completedTx = new List<Transaction>();
             lock (TransactionLock)
@@ -55,15 +56,29 @@ namespace WebService.Containers
             List<Transaction> fetchedTx = new List<Transaction>();
             lock (TransactionLock)
             {
-                fetchedTx = TxPool.GetRange(0, 4);
-                PendingTx.AddRange(fetchedTx);
-                TxPool.RemoveRange(0, 4);
+                if (TxPool.Count > 0)
+                {
+                    var nbFetch = TxPool.Count >= 4 ? 4 : TxPool.Count;
+                    fetchedTx = TxPool.GetRange(0, nbFetch);
+                    PendingTx.AddRange(fetchedTx);
+                    TxPool.RemoveRange(0, nbFetch);
+                }
             }
             return fetchedTx;
         }
 
         private static void SaveTransaction(List<Transaction> finishedTransactions)
         {
+            var insertStatement = "INSERT INTO TRANSACTION (FromWallet,ToWallet,Content) Values";
+            var baseInsertValues = " (?fromWallet,?toWallet,?content),";
+            foreach (Transaction t in finishedTransactions) {
+                var insertRow = baseInsertValues.Replace("?fromWallet", "'" + t.FromWallet + "'");
+                insertRow = insertRow.Replace("?toWallet", "'" + t.ToWallet + "'");
+                insertRow = insertRow.Replace("?content", t.Content.ToString());
+                insertStatement += insertRow;
+            }
+            insertStatement = insertStatement.Remove(insertStatement.Length - 1);
+            DatabaseHelper.GetInstance().ExecuteSQL(insertStatement);
         }
     }
 }

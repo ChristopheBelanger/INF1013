@@ -36,6 +36,7 @@ namespace WebService.Database
                 {
                     Connection.Open();
                     var reader = cmd.ExecuteReader();
+                    Connection.Close();
                     return reader;
                 }
                 catch (Exception e)
@@ -45,11 +46,15 @@ namespace WebService.Database
             }
         }
 
-        public void ExecuteSQL(MySqlCommand cmd)
+        public void ExecuteSQL(string query)
         {
             lock (DbLock)
             {
+                var cmd = Connection.CreateCommand();
+                Connection.Open();
+                cmd.CommandText = query;
                 cmd.ExecuteNonQuery();
+                Connection.Close();
             }
         }
     }

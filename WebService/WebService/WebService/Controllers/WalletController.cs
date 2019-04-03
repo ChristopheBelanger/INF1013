@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
 using WebService.Database;
 using WebService.Models;
 
@@ -21,20 +22,22 @@ namespace WebService.Controllers
         [HttpGet("{id}", Name = "GetWallet")]
         public Wallet GetWallet(string id)
         {
-            var reader = DatabaseHelper.GetInstance().RetrieveData("SELECT * FROM Wallets where Wallet = '" + id + "'");
+            try
+            {
+                var reader = DatabaseHelper.GetInstance().RetrieveData("SELECT * FROM Wallets where Hash = '" + id + "'");
+                return DbModelParser.parseWallet(reader).FirstOrDefault();
 
-            var hasValue = reader.Read();
-            if (hasValue) {
-                return new Wallet(reader.GetFieldValue<string>(0), reader.GetFieldValue<double>(1));
             }
-            return null;
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         // POST: api/Wallet
         [HttpPost]
         public string Post([FromBody] string value)
         {
-            string newWallet = "";
             var crypt = new SHA256Managed();
             string hash = String.Empty;
             var currDate = DateTime.Now;
@@ -45,13 +48,14 @@ namespace WebService.Controllers
                 hash += theByte.ToString("x2");
             }
             InsertWallet(hash);
-            return newWallet;
+            var json = JsonConvert.SerializeObject(new Wallet(hash, 1000));
+            return json;
         }
 
-        private void InsertWallet(string hashedWallet) {
-            var cmd = new MySqlCommand();
-            cmd.CommandText = "INSERT INTO WALLETS VALUES(?wallet,1000)";
-            cmd.Parameters.AddWithValue("?wallet", hashedWallet);
+        private void InsertWallet(string hashedWallet)
+        {
+            var cmd = "INSERT INTO WALLETS VALUES(?wallet,1000)";
+            cmd = cmd.Replace("?wallet", "'" + hashedWallet + "'");
             DatabaseHelper.GetInstance().ExecuteSQL(cmd);
         }
 

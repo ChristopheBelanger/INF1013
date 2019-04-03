@@ -7,9 +7,16 @@ namespace WebService.Models
 {
     public class Transaction
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
         public string FromWallet { get; set; }
         public string ToWallet { get; set; }
         public double Content { get; set; }
+
+        public Transaction(int i, string from, string to, double content) {
+            Id = i;
+            FromWallet = from;
+            ToWallet = to;
+            Content = content;
+        }
     }
 }
