@@ -26,9 +26,8 @@ namespace WebService.Controllers
         [HttpGet]
         public List<Transaction> Get()
         {
-            var result = DatabaseHelper.GetInstance().RetrieveData("SELECT * FROM TRANSACTION");
-            var transactions = DbModelParser.parseTransaction(result);
-            return transactions;
+            var result = DatabaseHelper.GetInstance().RetrieveData<Transaction>("SELECT * FROM TRANSACTION",DbModelParser.parseTransaction);
+            return result;
 
         }
 

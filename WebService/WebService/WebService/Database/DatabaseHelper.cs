@@ -23,10 +23,10 @@ namespace WebService.Database
         public static DatabaseHelper GetInstance() {
             return Database;
         }
-        
 
+        public delegate T ParserFunction<T>(MySqlDataReader reader);
 
-        public MySqlDataReader RetrieveData(string Query)
+        public List<T> RetrieveData<T>(string Query, ParserFunction<List<T>> f)
         {
             lock (DbLock)
             {
@@ -36,8 +36,9 @@ namespace WebService.Database
                 {
                     Connection.Open();
                     var reader = cmd.ExecuteReader();
+                    List<T> obj = f(reader);
                     Connection.Close();
-                    return reader;
+                    return obj;
                 }
                 catch (Exception e)
                 {

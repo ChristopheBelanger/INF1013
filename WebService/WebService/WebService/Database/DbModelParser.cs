@@ -13,7 +13,7 @@ namespace WebService.Database
             var wallets = new List<Wallet>();
             while (reader.Read())
             {
-                wallets.Add(new Wallet(reader.GetFieldValue<string>(0), reader.GetFieldValue<double>(1)));
+                wallets.Add(new Wallet(reader.GetFieldValue<string>(0), (double)reader.GetFieldValue<decimal>(1)));
             }
             return wallets;
         }
@@ -23,7 +23,7 @@ namespace WebService.Database
             var transactions = new List<Transaction>();   
             while (reader.Read())
             {
-                transactions.Add(new Transaction(reader.GetFieldValue<int>(0), reader.GetFieldValue<string>(1), reader.GetFieldValue<string>(2), reader.GetFieldValue<double>(3)));
+                transactions.Add(new Transaction(reader.GetFieldValue<int>(0), reader.GetFieldValue<string>(1), reader.GetFieldValue<string>(2), (double)reader.GetFieldValue<decimal>(3)));
             }
             return transactions;
         }
