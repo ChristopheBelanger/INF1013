@@ -24,7 +24,7 @@ namespace WebService.Controllers
         {
             try
             {
-                var reader = DatabaseHelper.GetInstance().RetrieveData<Wallet>("SELECT * FROM Wallets where Hash = '" + id + "'", DbModelParser.parseWallet);
+                var reader = DatabaseHelper.GetInstance().RetrieveData<Wallet>("SELECT * FROM Wallets where Hash = '" + id + "'", DbModelParser.parseWallet,"");
 
                 return reader.FirstOrDefault();
             }

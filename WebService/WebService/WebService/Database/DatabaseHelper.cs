@@ -24,9 +24,9 @@ namespace WebService.Database
             return Database;
         }
 
-        public delegate T ParserFunction<T>(MySqlDataReader reader);
+        public delegate T ParserFunction<T>(MySqlDataReader reader, string id);
 
-        public List<T> RetrieveData<T>(string Query, ParserFunction<List<T>> f)
+        public List<T> RetrieveData<T>(string Query, ParserFunction<List<T>> f,string id)
         {
             lock (DbLock)
             {
@@ -36,7 +36,7 @@ namespace WebService.Database
                 {
                     Connection.Open();
                     var reader = cmd.ExecuteReader();
-                    List<T> obj = f(reader);
+                    List<T> obj = f(reader, id);
                     Connection.Close();
                     return obj;
                 }
