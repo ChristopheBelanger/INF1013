@@ -26,7 +26,7 @@ namespace WebService.Controllers
         [HttpGet("{id}", Name = "GetTransactionHistory")]
         public IEnumerable<TransactionHistory> Get(string id)
         {
-            List<TransactionHistory> result = DatabaseHelper.GetInstance().RetrieveData("SELECT * FROM TRANSACTION Where FromWallet = '" + id + "' OR ToWallet = '" + id + "'",DbModelParser.parseTransactionHistory, id);
+            List<TransactionHistory> result = DatabaseHelper.GetInstance().RetrieveData("SELECT * FROM TRANSACTION Where FromWallet = '" + id + "' OR ToWallet = '" + id + "'",DbModelParser.ParseTransactionHistory, id);
             return result;
 
         }

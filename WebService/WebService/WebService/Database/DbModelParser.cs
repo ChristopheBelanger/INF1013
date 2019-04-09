@@ -9,7 +9,7 @@ namespace WebService.Database
 {
     public static class DbModelParser
     {
-        public static List<Wallet> parseWallet(MySqlDataReader reader, string id) {
+        public static List<Wallet> ParseWallet(MySqlDataReader reader, string id) {
             var wallets = new List<Wallet>();
             while (reader.Read())
             {
@@ -18,7 +18,7 @@ namespace WebService.Database
             return wallets;
         }
 
-        public static List<Transaction> parseTransaction(MySqlDataReader reader, string id)
+        public static List<Transaction> ParseTransaction(MySqlDataReader reader, string id)
         {
             var transactions = new List<Transaction>();   
             while (reader.Read())
@@ -28,7 +28,7 @@ namespace WebService.Database
             return transactions;
         }
 
-        public static List<TransactionHistory> parseTransactionHistory(MySqlDataReader reader, string id)
+        public static List<TransactionHistory> ParseTransactionHistory(MySqlDataReader reader, string id)
         {
             var transactions = new List<TransactionHistory>();
             while (reader.Read())
