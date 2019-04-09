@@ -7,12 +7,12 @@ namespace WebService.Models
 {
     public class TransactionHistory
     {
-        int Id;
-        string Action;
-        string Wallet;
-        double value;
+        public long Id { get; set; }
+        public string Action { get; set; }
+        public string Wallet { get; set; }
+        public double value { get; set; }
 
-        public TransactionHistory(int v1, string action, string wallet, double v2)
+        public TransactionHistory(long v1, string action, string wallet, double v2)
         {
             Id = v1;
             Action = action;
