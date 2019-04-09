@@ -1,0 +1,10 @@
+<?php 
+session_start();
+IF(ISSET($_SESSION['name'])){
+header("Location:account.php");
+	die();
+}else{
+	header("Location:welcome.php");
+	die();
+}
+?>
