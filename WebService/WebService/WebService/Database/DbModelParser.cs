@@ -23,7 +23,7 @@ namespace WebService.Database
             var transactions = new List<Transaction>();   
             while (reader.Read())
             {
-                transactions.Add(new Transaction(reader.GetFieldValue<int>(0), reader.GetFieldValue<string>(1), reader.GetFieldValue<string>(2), reader.GetFieldValue<double>(3), reader.GetFieldValue<string>(4)));
+                transactions.Add(new Transaction(reader.GetFieldValue<int>(0), reader.GetFieldValue<string>(1), reader.GetFieldValue<string>(2), reader.GetFieldValue<double>(3)));
             }
             return transactions;
         }
@@ -44,7 +44,7 @@ namespace WebService.Database
                     action = "From";
                     wallet = reader.GetFieldValue<string>(2);
                 }
-                transactions.Add(new TransactionHistory(reader.GetFieldValue<long>(0), action, wallet, reader.GetFieldValue<double>(3), reader.GetFieldValue<string>(4)));
+                transactions.Add(new TransactionHistory(reader.GetFieldValue<long>(0), action, wallet, reader.GetFieldValue<double>(3)));
             }
             return transactions;
         }
