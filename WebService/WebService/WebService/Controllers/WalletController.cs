@@ -52,7 +52,7 @@ namespace WebService.Controllers
 
         // POST: api/Wallet
         [HttpPost]
-        public string Post(string value)
+        public string Post()
         {
             var crypt = new SHA256Managed();
             Random random = new Random();
@@ -67,7 +67,7 @@ namespace WebService.Controllers
                 hash += theByte.ToString("x2");
             }
             InsertWallet(hash);
-
+            var json = JsonConvert.SerializeObject(new Wallet(hash, 1000));
             return hash;
         }
 
