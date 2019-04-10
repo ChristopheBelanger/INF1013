@@ -23,6 +23,13 @@ namespace WebService.Controllers
         }
 
         // POST: api/Client
+        [HttpGet("{fromWallet}/{toWallet}/{content}", Name = "PushNewTransaction")]
+        public void PushNewTransaction(string fromWallet,string toWallet,double content)
+        {
+            TransactionPool.addTx(new Transaction(0, fromWallet, toWallet, content));
+        }
+
+        // POST: api/Client
         [HttpGet("{id}", Name = "GetTransactionHistory")]
         public TransactionHistoryResponseModel Get(string id)
         {
