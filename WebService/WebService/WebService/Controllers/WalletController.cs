@@ -39,6 +39,7 @@ namespace WebService.Controllers
         public string Post(string value)
         {
             var crypt = new SHA256Managed();
+
             string hash = String.Empty;
             var currDate = DateTime.Now;
             string timeStamp = currDate.ToString("yyyyMMddHHmmssffff");
