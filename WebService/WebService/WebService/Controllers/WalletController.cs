@@ -24,7 +24,7 @@ namespace WebService.Controllers
         {
             try
             {
-                var reader = DatabaseHelper.GetInstance().RetrieveData<Wallet>("SELECT * FROM Wallets where Hash = '" + id + "'", DbModelParser.ParseWallet, "");
+                var reader = DatabaseHelper.GetInstance().RetrieveData<Wallet>("SELECT * FROM Wallets where Hash = '" + id + "'", DbModelParser.ParseWallet,"");
 
                 return reader.FirstOrDefault();
             }
@@ -33,7 +33,6 @@ namespace WebService.Controllers
                 throw e;
             }
         }
-
 
         public string CalculateMD5Hash(string input)
         {
@@ -77,6 +76,15 @@ namespace WebService.Controllers
             var cmd = "INSERT INTO WALLETS VALUES(?wallet,1000)";
             cmd = cmd.Replace("?wallet", "'" + hashedWallet + "'");
             DatabaseHelper.GetInstance().ExecuteSQL(cmd);
+            var insertStatement = "INSERT INTO TRANSACTION (FromWallet,ToWallet,Content,Datetime) Values";
+            var baseInsertValues = " (?fromWallet,?toWallet,?content,?datetime)";
+            var initWalletTx = new Transaction(0, "Gift", hashedWallet, 1000);
+            var insertRow = baseInsertValues.Replace("?fromWallet", "'" + initWalletTx.FromWallet + "'");
+            insertRow = insertRow.Replace("?toWallet", "'" + initWalletTx.ToWallet + "'");
+            insertRow = insertRow.Replace("?content", initWalletTx.Content.ToString());
+            insertRow = insertRow.Replace("?content", "'" + initWalletTx.Date + "'");
+            insertStatement += insertRow;
+            DatabaseHelper.GetInstance().ExecuteSQL(insertStatement);
         }
 
     }
