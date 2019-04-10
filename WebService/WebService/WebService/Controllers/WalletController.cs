@@ -49,7 +49,7 @@ namespace WebService.Controllers
             }
             InsertWallet(hash);
             var json = JsonConvert.SerializeObject(new Wallet(hash, 1000));
-            return json;
+            return hash;
         }
 
         private void InsertWallet(string hashedWallet)

@@ -63,10 +63,10 @@ IF(ISSET($_SESSION['name'])){
 		<?php 
 		IF(ISSET($_SESSION['wallet'])) {
 			
-			$strHeader = get_headers($WALLET_URL)[0];
+			$strHeader = get_headers($TRANSFER_URL)[0];
 			$statusCode = substr($strHeader, 9, 3 );
 
-			if($statusCode == 404 ) {
+			if($statusCode == 404) {
 				echo "<div class=\"alert alert-danger\">
 					  <strong>Attention!</strong> Probleme de connexion avec le serveur, attendez quelques instant.
 					</div>";
@@ -142,10 +142,8 @@ IF(ISSET($_SESSION['name'])){
 						  <input type=\"text\" class=\"form-control\" id=\"montant\" placeholder=\"Montant\" required>
 						</div>
 						<div class=\"col-md-2 mb-3 text-center\">
-						<br>
-							<input type=\"button\" class=\"btn btn-primary pull-center\" onclick=\"window.location.href = '";
-							echo $TRANSFER_URL;
-							echo "'\" value= \"Transferer\"/>
+						<br> 
+						<button type=\"submit\" class=\"btn btn-primary pull-center\">Transferer</button>
 						</div>
 					  </div>
 					  </form>
@@ -207,7 +205,7 @@ IF(ISSET($_SESSION['name'])){
 			    $strHeader = get_headers($WALLET_URL)[0];
 				$statusCode = substr($strHeader, 9, 3 );
 
-				if($statusCode == 404 ) {
+				if($statusCode == 404) {
 					echo "<div class=\"alert alert-danger\">
 			  <strong>Attention!</strong> Probleme de connexion avec le serveur, attendez quelques instant.
 			</div>";

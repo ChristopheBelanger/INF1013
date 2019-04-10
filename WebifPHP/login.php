@@ -77,7 +77,7 @@ IF(ISSET($_POST['login'])){
 		else  
 		{  
 		  //return false;  
-			echo "<div>Access denied, check variable is false. <br></br> $password <br></br>  <a href='login.php'>Back.</a></div>";
+			echo "<div>Access denied, check variable is false. <a href='login.php'>Back.</a></div>";
 		}
 		
 	}else{
