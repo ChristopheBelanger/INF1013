@@ -81,7 +81,8 @@ namespace Blockchain
             AddBlock(block);
 
             PendingTransactions = new List<Transaction>();
-            CreateTransaction(new Transaction(null, minerAddress, Reward));
+            int newId = PendingTransactions[PendingTransactions.Count - 1].Id + 1;
+            CreateTransaction(new Transaction(newId, null, minerAddress, Reward));
         }
     }
 }
