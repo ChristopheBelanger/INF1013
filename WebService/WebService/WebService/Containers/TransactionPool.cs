@@ -67,14 +67,30 @@ namespace WebService.Containers
             return fetchedTx;
         }
 
+
+        public static List<TransactionHistory> GetPendingTransactionForWallet(string wallet)
+        {
+            var pendingTx = new List<TransactionHistory>();
+            lock (TransactionLock)
+            {
+                var transaction = TxPool.FindAll(tx => tx.FromWallet == wallet || tx.ToWallet == wallet);
+                transaction.AddRange(PendingTx.FindAll(tx => tx.FromWallet == wallet || tx.ToWallet == wallet));
+                pendingTx = transaction.ConvertAll(tx => tx.ToTransactionHistory(wallet, "Pending"));
+            }
+            pendingTx.Sort();
+            return pendingTx;
+        }
+
         private static void SaveTransaction(List<Transaction> finishedTransactions)
         {
-            var insertStatement = "INSERT INTO TRANSACTION (FromWallet,ToWallet,Content) Values";
-            var baseInsertValues = " (?fromWallet,?toWallet,?content),";
+
+            var insertStatement = "INSERT INTO TRANSACTION (FromWallet,ToWallet,Content,Datetime) Values";
+            var baseInsertValues = " (?fromWallet,?toWallet,?content,?datetime)";
             foreach (Transaction t in finishedTransactions) {
                 var insertRow = baseInsertValues.Replace("?fromWallet", "'" + t.FromWallet + "'");
                 insertRow = insertRow.Replace("?toWallet", "'" + t.ToWallet + "'");
                 insertRow = insertRow.Replace("?content", t.Content.ToString());
+                insertRow = insertRow.Replace("?content", "'" + t.Date + "'");
                 insertStatement += insertRow;
             }
             insertStatement = insertStatement.Remove(insertStatement.Length - 1);

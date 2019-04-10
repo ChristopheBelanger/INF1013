@@ -34,8 +34,7 @@ namespace WebService.Controllers
             }
         }
 
-<<<<<<< HEAD
-=======
+
 
         public string CalculateMD5Hash(string input)
         {
@@ -53,8 +52,6 @@ namespace WebService.Controllers
             return sb.ToString();
         }
 
->>>>>>> parent of 3c712f8... Update WalletController.cs
-        // POST: api/Wallet
         [HttpPost]
         public string Post(string value)
         {
@@ -68,7 +65,6 @@ namespace WebService.Controllers
                 hash += theByte.ToString("x2");
             }
             InsertWallet(hash);
-            var json = JsonConvert.SerializeObject(new Wallet(hash, 1000));
             return hash;
         }
 
@@ -77,6 +73,15 @@ namespace WebService.Controllers
             var cmd = "INSERT INTO WALLETS VALUES(?wallet,1000)";
             cmd = cmd.Replace("?wallet", "'" + hashedWallet + "'");
             DatabaseHelper.GetInstance().ExecuteSQL(cmd);
+            var insertStatement = "INSERT INTO TRANSACTION (FromWallet,ToWallet,Content,Datetime) Values";
+            var baseInsertValues = " (?fromWallet,?toWallet,?content,?datetime)";
+            var initWalletTx = new Transaction(0, "Gift", hashedWallet, 1000);
+            var insertRow = baseInsertValues.Replace("?fromWallet", "'" + initWalletTx.FromWallet + "'");
+            insertRow = insertRow.Replace("?toWallet", "'" + initWalletTx.ToWallet + "'");
+            insertRow = insertRow.Replace("?content", initWalletTx.Content.ToString());
+            insertRow = insertRow.Replace("?content", "'" + initWalletTx.Date + "'");
+            insertStatement += insertRow;
+            DatabaseHelper.GetInstance().ExecuteSQL(insertStatement);
         }
 
     }
