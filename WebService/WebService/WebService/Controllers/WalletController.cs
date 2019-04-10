@@ -36,7 +36,7 @@ namespace WebService.Controllers
 
         // POST: api/Wallet
         [HttpPost]
-        public string Post([FromBody] string value)
+        public string Post(string value)
         {
             var crypt = new SHA256Managed();
             string hash = String.Empty;
