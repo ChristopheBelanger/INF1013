@@ -24,10 +24,12 @@ namespace WebService.Controllers
 
         // POST: api/Client
         [HttpGet("{id}", Name = "GetTransactionHistory")]
-        public IEnumerable<TransactionHistory> Get(string id)
+        public TransactionHistoryResponseModel Get(string id)
         {
             List<TransactionHistory> result = DatabaseHelper.GetInstance().RetrieveData("SELECT * FROM TRANSACTION Where FromWallet = '" + id + "' OR ToWallet = '" + id + "'",DbModelParser.ParseTransactionHistory, id);
-            return result;
+            result.Sort();
+            result.AddRange(TransactionPool.GetPendingTransactionForWallet(id));
+            return new TransactionHistoryResponseModel(result);
 
         }
 
