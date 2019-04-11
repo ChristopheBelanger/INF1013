@@ -63,10 +63,10 @@ IF(ISSET($_SESSION['name'])){
 		<?php 
 		IF(ISSET($_SESSION['wallet'])) {
 			
-			$strHeader = get_headers($WALLET_URL)[0];
+			$strHeader = get_headers($TRANSCTION_URL)[0];
 			$statusCode = substr($strHeader, 9, 3 );
 
-			if($statusCode == 404 ) {
+			if($statusCode == 404) {
 				echo "<div class=\"alert alert-danger\">
 					  <strong>Attention!</strong> Probleme de connexion avec le serveur, attendez quelques instant.
 					</div>";
@@ -83,13 +83,22 @@ IF(ISSET($_SESSION['name'])){
 					curl_close($ch);
 
 					$obj = json_decode($result);
+					echo "<div role=\"tabpanel\" class=\"tab-pane active container-fluid\" id=\"home\">
+				<div class=\"row\">
+					<div class=\"col-md-8\"><div class=\"panel panel-default\">
+					<div class=\"panel-heading\">Ce qui est reçu de l'API pour les transactions à afficher</div>
+					<div class=\"panel-body\">
+						<p>" . $obj . "</p>
+					</div>
+				</div>
+			</div>";
 					$elementCount  = count($obj->transactions);
 					$solde = 0;
 					for($i = 0; $i < $elementCount; $i++) {
-						if($obj->transactions[$i]->action == "Send To"){
-							$solde -= $obj->transactions[$i]->value;
+						if($obj->transactions[$i]->Action == "send to"){
+							$solde -= $obj->transactions[$i]->Montant;
 						} else {
-							$solde += $obj->transactions[$i]->value;
+							$solde += $obj->transactions[$i]->Montant;
 						}
 					}
 					if($solde > 1){
@@ -122,19 +131,19 @@ IF(ISSET($_SESSION['name'])){
 					<div class=\"col-md-12\"><div class=\"panel panel-default\">
 						<div class=\"panel-heading\">Transferts</div>
 					<div class=\"panel-body\">
-					<form action=\"include/transfer.php\" method=\"POST\">
+					<form action=\"\" method=\"post\">
 					<div class=\"form-row\">
 						<div class=\"col-md-8 mb-3 text-center\">
 						<br>
-						  <input type=\"text\" class=\"form-control\" id=\"sendTo\" name=\"sendTo\" placeholder=\"Numero de portefeuille\" required>
+						  <input type=\"text\" class=\"form-control\" id=\"sendTo\" placeholder=\"Numero de portefeuille\" required>
 						</div>
 						<div class=\"col-md-2 mb-3 text-center\">
 						<br>
-						  <input type=\"text\" class=\"form-control\" id=\"montant\" name=\"montant\" placeholder=\"Montant\" required>
+						  <input type=\"text\" class=\"form-control\" id=\"montant\" placeholder=\"Montant\" required>
 						</div>
 						<div class=\"col-md-2 mb-3 text-center\">
 						<br> 
-							<button type=\"submit\" class=\"btn btn-primary pull-center\">Transferer</button>
+						<button type=\"submit\" class=\"btn btn-primary pull-center\">Transferer</button>
 						</div>
 					  </div>
 					  </form>
@@ -166,12 +175,12 @@ IF(ISSET($_SESSION['name'])){
 			  
 					for($i = $elementCount - 1; $i > -1; $i--) {
 						echo "<tr>";	
-						  echo "<td>" . $obj->transactions[$i]->id . "</td>";
-						  echo "<td>" . $obj->transactions[$i]->action . "</td>";
-						  echo "<td>" . $obj->transactions[$i]->wallet . "</td>";
-						  echo "<td>" . $obj->transactions[$i]->value . "</td>";
-						  echo "<td>" . $obj->transactions[$i]->date . "</td>";
-						  echo "<td>" . $obj->transactions[$i]->status . "</td>";
+						  echo "<td>" . $obj->transactions[$i]->Id . "</td>";
+						  echo "<td>" . $obj->transactions[$i]->Action . "</td>";
+						  echo "<td>" . $obj->transactions[$i]->Portefeuille . "</td>";
+						  echo "<td>" . $obj->transactions[$i]->Montant . "</td>";
+						  echo "<td>" . $obj->transactions[$i]->Date . "</td>";
+						  echo "<td>" . $obj->transactions[$i]->Status . "</td>";
 						echo "</tr>";
 					} 
 					
@@ -193,10 +202,10 @@ IF(ISSET($_SESSION['name'])){
 			";}
 		} else {
 			
-			    $strHeader = get_headers($WALLET_URL)[0];
+			    $strHeader = get_headers($TRANSACTIONS_URL)[0];
 				$statusCode = substr($strHeader, 9, 3 );
 
-				if($statusCode == 404 ) {
+				if($statusCode == 404) {
 					echo "<div class=\"alert alert-danger\">
 			  <strong>Attention!</strong> Probleme de connexion avec le serveur, attendez quelques instant.
 			</div>";

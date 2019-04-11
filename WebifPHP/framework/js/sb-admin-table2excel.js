@@ -2,8 +2,7 @@ $(document).ready(function(){
   var table = $('#dataTable').DataTable( {
 			"paging": false,
 			"searching": false,
-			"iDisplayLength": -1,
-			"order": [[ 0, "desc" ]]
+			"iDisplayLength": -1
   });
   
   $('#btn-export').on('click', function(){
