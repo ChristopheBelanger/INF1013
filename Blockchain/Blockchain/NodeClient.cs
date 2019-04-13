@@ -31,7 +31,7 @@ namespace Blockchain
                 Console.WriteLine("Connexion.....");
 
                 client.Connect(ip, port);
-                // use the ipaddress as in the server program
+                // use the ip address as in the server program
 
                 NetworkStream stm = client.GetStream();
 

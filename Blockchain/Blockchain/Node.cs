@@ -7,21 +7,20 @@ namespace Blockchain
 {
     public class Node
     {
-        IList<Transaction> untreatedTransactions;
         IList<Transaction> pendingTransactions;
         IList<String> addressesNoeuds;
         NodeServer serveur;
         TcpClient clientService;
         NetworkStream clientServiceStream;
         Blockchain blockchain;
+        int rank { get; set; } = 0;
 
         public Node(AddresseIP addresseService)
         {
-            untreatedTransactions = new List<Transaction>();
             pendingTransactions = new List<Transaction>();
             addressesNoeuds = new List<String>();
 
-            // connexion au service, obtenir liste des autres noeuds et des transactions non traitees
+            // connexion au service, obtenir liste des noeuds maitres et des transactions non traitees
             clientService = new TcpClient();
             clientService.Connect(addresseService.ip, addresseService.port);
             clientServiceStream = clientService.GetStream();
