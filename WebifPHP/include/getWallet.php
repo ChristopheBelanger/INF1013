@@ -6,10 +6,21 @@ session_start();
 require 'db_con.php';
 
 //get the wallet from the API
-
 $ch = curl_init($WALLET_URL);
-curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-curl_setopt($ch,CURLOPT_TIMEOUT,10);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $_SESSION['email']);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+ 
+// Set HTTP Header for POST request 
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    'Content-Type: text/plain',
+    'Content-Length: ' . strlen($_SESSION['email']))
+);
+ 
 $wallet = curl_exec($ch);
 curl_close($ch);
 
