@@ -85,12 +85,12 @@ namespace WebService.Containers
         {
 
             var insertStatement = "INSERT INTO TRANSACTION (FromWallet,ToWallet,Content,Datetime) Values";
-            var baseInsertValues = " (?fromWallet,?toWallet,?content,?datetime)";
+            var baseInsertValues = " (?fromWallet,?toWallet,?content,?datetime),";
             foreach (Transaction t in finishedTransactions) {
                 var insertRow = baseInsertValues.Replace("?fromWallet", "'" + t.FromWallet + "'");
                 insertRow = insertRow.Replace("?toWallet", "'" + t.ToWallet + "'");
                 insertRow = insertRow.Replace("?content", t.Content.ToString());
-                insertRow = insertRow.Replace("?content", "'" + t.Date + "'");
+                insertRow = insertRow.Replace("?datetime", "'" + t.Date + "'");
                 insertStatement += insertRow;
             }
             insertStatement = insertStatement.Remove(insertStatement.Length - 1);
