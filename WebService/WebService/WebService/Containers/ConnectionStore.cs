@@ -22,7 +22,10 @@ namespace WebService.Containers
         {
             lock (ConnectionLock)
             {
-                ConnectedNodes.Add(id);
+                if (!ConnectedNodes.Contains(id))
+                {
+                    ConnectedNodes.Add(id);
+                }
             }
         }
 
