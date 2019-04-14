@@ -8,8 +8,8 @@ namespace Blockchain
 {
     public class Node
     {
-        IList<Transaction> pendingTransactions;
-        IList<String> addressesNoeuds;
+        List<Transaction> pendingTransactions;
+        List<String> addressesNoeuds;
         NodeServer serveur;
         TcpClient clientService;
         NetworkStream clientServiceStream;
@@ -28,7 +28,12 @@ namespace Blockchain
             String responseString = client.UploadString("https://localhost:5001/api/Connection", addr);
 
             responseString=responseString.Replace("[", "").Replace("]", "").Replace("\"","");
-            addressesNoeuds = responseString.Split(',');
+            String[] temp = responseString.Split(',');
+            foreach(String s in temp)
+            {
+                addressesNoeuds.Add(s);
+            }
+            addressesNoeuds.Remove(addresse.ip + ":" + addresse.port);
 
             String test = "";
             //// connexion au service, obtenir liste des noeuds maitres et des transactions non traitees
