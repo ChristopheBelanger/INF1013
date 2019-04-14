@@ -68,7 +68,6 @@ namespace Blockchain
                 Thread clientThread = new Thread(new ParameterizedThreadStart(HandleClientComm));
 
                 clientThread.Start(client);
-
             }
         }
 
@@ -107,16 +106,7 @@ namespace Blockchain
 
                 if (Regex.IsMatch(bufferincmessage, "test", RegexOptions.IgnoreCase))
                 {
-                //    bufferincmessageresult = bufferincmessage.Split('^');
-                //    String nickname_Cl = bufferincmessageresult[1];
-                //    String password_Cl = bufferincmessageresult[2];
-                //    //getuserdata_db();
-                //    //login();
-
-                //    byte[] buffer = encoder.GetBytes(inlogmessage);
-
-                //    clientStream.Write(buffer, 0, buffer.Length);
-                //    clientStream.Flush();
+                
                 }
 
 

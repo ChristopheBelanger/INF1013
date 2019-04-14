@@ -10,23 +10,15 @@ namespace Blockchain
 
         public static void Main(string[] args)
         {
-
-            Console.ReadKey();
             blockchain = new Blockchain();
-            if (Array.Find(args, s => s.Equals("-s"))!=null)
-            {
-                NodeServer nodeServer = new NodeServer(blockchain);
-                nodeServer.Start();
-            }else if(Array.Find(args, s => s.Equals("-c")) != null)
-            {
-                NodeClient nodeClient = new NodeClient(blockchain);
-                nodeClient.Start();
-            }
+            AddresseIP addresseService = new AddresseIP();
+            addresseService.ip = "127.0.0.1";
+            addresseService.port = 5001;
+            AddresseIP addresse = new AddresseIP();
+            addresse.ip = "127.0.0.1";
+            addresse.port = 8090;
 
-
-
-
-
+            Node node = new Node(addresseService, addresse);
         }
     }
 }
