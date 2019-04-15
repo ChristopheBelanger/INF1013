@@ -78,5 +78,14 @@ namespace Blockchain
             int newId = PendingTransactions[PendingTransactions.Count - 1].Id + 1;
             CreateTransaction(new Transaction(newId, null, minerAddress, Reward));
         }
+
+        public override string ToString() {
+            String result = "";
+            foreach(Block block in Chain)
+            {
+                result += block.ToString();
+            }
+            return result;
+        }
     }
 }

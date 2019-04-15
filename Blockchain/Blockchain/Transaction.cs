@@ -15,5 +15,10 @@ namespace Blockchain
             ToAddress = toAddress;
             Amount = amount;
         }
+
+        public override string ToString()
+        {
+            return "ID=" + Id + ";From=" + FromAddress + ";To=" + ToAddress + ";Amount=" + Amount;
+        }
     }
 }

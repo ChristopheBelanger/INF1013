@@ -35,7 +35,10 @@ namespace Blockchain
             String[] temp = responseString.Split(',');
             foreach (String s in temp)
             {
-                addressesNoeuds.Add(s);
+                if (!s.Equals(""))
+                {
+                    addressesNoeuds.Add(s);
+                }
             }
             addressesNoeuds.Remove(addresse.ip + ":" + addresse.port);
 
