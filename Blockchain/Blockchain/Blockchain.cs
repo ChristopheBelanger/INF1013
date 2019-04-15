@@ -18,16 +18,10 @@ namespace Blockchain
             AddGenesisBlock();
         }
 
-
         public void InitializeChain()
         {
             Chain = new List<Block>();
         }
-
-        //public Block CreateGenesisBlock()
-        //{
-        //    return new Block(DateTime.Now, null, new List<Transaction>());
-        //}
 
         public void AddGenesisBlock()
         {

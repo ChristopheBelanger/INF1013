@@ -3,7 +3,7 @@ namespace Blockchain
 {
     public class AddresseIP
     {
-        public String ip { get; set; } = "127.0.0.1";
-        public int port { get; set; } = 8080;
+        public String ip { get; set; } = "";
+        public int port { get; set; } = 0;
     }
 }

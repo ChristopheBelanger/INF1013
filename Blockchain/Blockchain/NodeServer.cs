@@ -104,9 +104,10 @@ namespace Blockchain
                 String bufferincmessage = encoder.GetString(message, 0, bytesRead);
 
 
-                if (Regex.IsMatch(bufferincmessage, "test", RegexOptions.IgnoreCase))
+                if (Regex.IsMatch(bufferincmessage, "getBlockChain", RegexOptions.IgnoreCase))
                 {
-                
+                    String responseMessage = blockchain.ToString();
+                    Byte[] data = System.Text.Encoding.ASCII.GetBytes(responseMessage);
                 }
 
 
