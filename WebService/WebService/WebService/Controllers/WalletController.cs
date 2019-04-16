@@ -79,7 +79,7 @@ namespace WebService.Controllers
             var insertRow = baseInsertValues.Replace("?fromWallet", "'" + initWalletTx.FromWallet + "'");
             insertRow = insertRow.Replace("?toWallet", "'" + initWalletTx.ToWallet + "'");
             insertRow = insertRow.Replace("?content", initWalletTx.Content.ToString());
-            insertRow = insertRow.Replace("?content", "'" + initWalletTx.Date + "'");
+            insertRow = insertRow.Replace("?datetime", "'" + initWalletTx.Date + "'");
             insertStatement += insertRow;
             DatabaseHelper.GetInstance().ExecuteSQL(insertStatement);
         }
