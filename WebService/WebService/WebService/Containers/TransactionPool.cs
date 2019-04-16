@@ -73,8 +73,8 @@ namespace WebService.Containers
             var pendingTx = new List<TransactionHistory>();
             lock (TransactionLock)
             {
-                var transaction = TxPool.FindAll(tx => tx.FromWallet == wallet || tx.ToWallet == wallet);
-                transaction.AddRange(PendingTx.FindAll(tx => tx.FromWallet == wallet || tx.ToWallet == wallet));
+                var transaction = TxPool.FindAll(tx => tx.FromWallet == wallet );
+                transaction.AddRange(PendingTx.FindAll(tx => tx.FromWallet == wallet));
                 pendingTx = transaction.ConvertAll(tx => tx.ToTransactionHistory(wallet, "Pending"));
             }
             pendingTx.Sort();

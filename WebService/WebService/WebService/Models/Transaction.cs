@@ -44,8 +44,9 @@ namespace WebService.Models
 
         public TransactionHistory ToTransactionHistory(string concernedWallet, string status)
         {
-            var action = ToWallet == concernedWallet ? "Send To" : "From";
-            return new TransactionHistory(Id, action, concernedWallet, Content, Date, status);
+            var action = ToWallet == concernedWallet ? "Received From" :  "Send To";
+            var wallet = ToWallet == concernedWallet ? FromWallet : ToWallet;
+            return new TransactionHistory(Id, action, wallet, Content, Date, status);
         }
     }
 }
