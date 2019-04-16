@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using WebService.Containers;
 using WebService.Models;
 
@@ -22,8 +23,9 @@ namespace WebService.Controllers
 
         // POST api/Transaction
         [HttpPost]
-        public void Post([FromBody] int[] txId)
+        public void Post([FromBody] String txIdStr)
         {
+            int[] txId = JsonConvert.DeserializeObject<int[]>(txIdStr);
             TransactionPool.FinishTx(txId);
         }
     }
