@@ -84,11 +84,11 @@ namespace Blockchain
                     {
                         if (nodeServer.NewBlock != null && Blockchain.GetLatestBlock().PreviousHash == nodeServer.NewBlock.PreviousHash)
                         {
-                           
-                                Blockchain.AddBlock(nodeServer.NewBlock);
-                                nodeServer.NewBlock = null;
-                                
-                                pendingTransactions = new List<Transaction>();
+
+                            Blockchain.AddBlock(nodeServer.NewBlock);
+                            nodeServer.NewBlock = null;
+                            pendingTransactions = new List<Transaction>();
+                            //nodeserver.send newblock
                         }
                     }
                     if (pendingTransactions.Count > 0)
@@ -112,6 +112,14 @@ namespace Blockchain
                                             nodeServer.NewBlock = null;
                                             treatedBlock = null;
                                             pendingTransactions = new List<Transaction>();
+                                            List<String> ids = new List<String>();
+                                            foreach(Transaction t in Blockchain.GetLatestBlock().Transactions)
+                                            {
+                                                ids.Add(t.Id.ToString());
+                                            }
+                                            String idsToSend = JsonConvert.SerializeObject(ids);
+                                            responseString = serviceClient.UploadString("https://localhost:5001/api/Connection", idsToSend);
+                                            //nodeserver.send newblock
                                         }
                                     }
                                 }
