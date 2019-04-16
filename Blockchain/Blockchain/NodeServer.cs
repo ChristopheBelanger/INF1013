@@ -14,7 +14,7 @@ namespace Blockchain
     {
         private TcpListener tcpListener;
         private Thread listenThread;
-        String Ip  { get; set; } = "127.0.0.1";
+        String Ip { get; set; } = "127.0.0.1";
         int Port { get; set; } = 8080;
         public Blockchain Blockchain { get; set; }
         public Block NewBlock { get; set; } = null;
@@ -108,10 +108,23 @@ namespace Blockchain
 
                 if (Regex.IsMatch(bufferincmessage, "getBlockChain", RegexOptions.IgnoreCase))
                 {
-                    String bc= JsonConvert.SerializeObject(Blockchain);
+                    String bc = JsonConvert.SerializeObject(Blockchain);
                     byte[] bytes = Encoding.ASCII.GetBytes(bc);
                     clientStream.Write(bytes, 0, bytes.Length);
                 }
+                else
+                {
+                    if (Regex.IsMatch(bufferincmessage, "newBlock", RegexOptions.IgnoreCase))
+                    {
+                        if (NewBlock == null)
+                        {
+                            NewBlock = JsonConvert.DeserializeObject<Block>(bufferincmessage.Split('^')[1]);
+                            byte[] bytes = Encoding.ASCII.GetBytes("pending");
+                            clientStream.Write(bytes, 0, bytes.Length);
+                        }
+                    }
+                }
+
             }
         }
     }

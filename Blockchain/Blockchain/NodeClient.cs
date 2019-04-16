@@ -2,6 +2,8 @@
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
 using Newtonsoft.Json;
 
 namespace Blockchain
@@ -13,6 +15,7 @@ namespace Blockchain
         int Port { get; set; } = 8080;
         public Blockchain Blockchain { get; set; }
         public Block NewBlock { get; set; } = null;
+        NetworkStream stream;
 
         public NodeClient(Blockchain blockchain, String ip, int port)
         {
@@ -35,11 +38,11 @@ namespace Blockchain
                 client.Connect(masterIP, masterPort);
                 // use the ip address as in the server program
 
-                NetworkStream stm = client.GetStream();
+                stream = client.GetStream();
 
                 byte[] message = new byte[4096];
                 int bytesRead = 0;
-                bytesRead = stm.Read(message, 0, message.Length);
+                bytesRead = stream.Read(message, 0, message.Length);
 
                 //message has successfully been received
                 ASCIIEncoding encoder = new ASCIIEncoding();
@@ -47,6 +50,11 @@ namespace Blockchain
                 String bufferincmessage = encoder.GetString(message, 0, bytesRead);
                 if (bufferincmessage.Contains("Succes de connexion"))
                 {
+                    //create a thread to handle communication
+                    //with connected client
+                    Thread serverThread = new Thread(new ParameterizedThreadStart(HandleServerComm));
+
+                    serverThread.Start(client);
                     return true;
                 }
             }
@@ -69,10 +77,6 @@ namespace Blockchain
                 // Translate the passed message into ASCII and store it as a Byte array.
                 Byte[] data = System.Text.Encoding.ASCII.GetBytes("getBlockChain");
 
-                // Get a client stream for reading and writing.
-                //  Stream stream = client.GetStream();
-
-                NetworkStream stream = client.GetStream();
 
                 // Send the message to the connected TcpServer. 
                 stream.Write(data, 0, data.Length);
@@ -122,5 +126,49 @@ namespace Blockchain
             return null;
         }
 
+        private void HandleServerComm(object client)
+        {
+            while (true)
+            {
+                byte[] message = new byte[4096];
+                int bytesRead = 0;
+
+                try
+                {
+                    //blocks until a client sends a message
+                    bytesRead = stream.Read(message, 0, message.Length);
+                }
+                catch
+                {
+                    //a socket error has occured
+                    break;
+                }
+
+                if (bytesRead == 0)
+                {
+                    //the client has disconnected from the server
+                    break;
+                }
+
+                //message has successfully been received
+                ASCIIEncoding encoder = new ASCIIEncoding();
+
+                String bufferincmessage = encoder.GetString(message, 0, bytesRead);
+
+
+                if (Regex.IsMatch(bufferincmessage, "pending", RegexOptions.IgnoreCase))
+                {
+                   //do something..
+                }
+                else
+                {
+                    if (Regex.IsMatch(bufferincmessage, "newBlock", RegexOptions.IgnoreCase))
+                    {
+                        NewBlock = JsonConvert.DeserializeObject<Block>(bufferincmessage.Split('^')[1]);
+                    }
+                }
+
+            }
+        }
     }
 }
