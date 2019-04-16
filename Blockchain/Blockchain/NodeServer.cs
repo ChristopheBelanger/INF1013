@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace Blockchain
 {
@@ -11,30 +14,30 @@ namespace Blockchain
     {
         private TcpListener tcpListener;
         private Thread listenThread;
-        String ip  { get; set; } = "127.0.0.1";
-        int port { get; set; } = 8080;
-        Blockchain blockchain;
-        bool listen = true;
+        String Ip  { get; set; } = "127.0.0.1";
+        int Port { get; set; } = 8080;
+        public Blockchain Blockchain { get; set; }
+        public Block NewBlock { get; set; } = null;
 
         public NodeServer(Blockchain blockchain, String ip, int port)
         {
-            this.ip = ip;
-            this.port = port;
-            this.blockchain = blockchain;
+            this.Ip = ip;
+            this.Port = port;
+            this.Blockchain = blockchain;
         }
         public NodeServer(Blockchain blockchain, int port)
         {
-            this.port = port;
-            this.blockchain = blockchain;
+            this.Port = port;
+            this.Blockchain = blockchain;
         }
         public NodeServer(Blockchain blockchain)
         {
-            this.blockchain = blockchain;
+            this.Blockchain = blockchain;
         }
 
         public void Start()
         {
-            this.tcpListener = new TcpListener(IPAddress.Parse(ip), port);
+            this.tcpListener = new TcpListener(IPAddress.Parse(Ip), Port);
             this.listenThread = new Thread(new ThreadStart(ListenForClients));
             this.listenThread.Start();
         }
@@ -42,15 +45,14 @@ namespace Blockchain
         public void Stop()
         {
             tcpListener.Stop();
-            listen = false;
         }
 
         private void ListenForClients()
         {
             this.tcpListener.Start();
-            Console.WriteLine("Server has started on {0}:{1}.{2}En Attente de connexion...", ip, port, Environment.NewLine);
+            Console.WriteLine("Server has started on {0}:{1}.{2}En Attente de connexion...", Ip, Port, Environment.NewLine);
 
-            while (listen)
+            while (true)
             {
                 //blocks until a client has connected to the server
                 TcpClient client = this.tcpListener.AcceptTcpClient();
@@ -58,7 +60,7 @@ namespace Blockchain
 
                 // here was first an message that send hello client
                 NetworkStream clientStream = client.GetStream();
-                String hello = String.Format("Succes de connexion a {0}:{1}", ip, port);
+                String hello = String.Format("Succes de connexion a {0}:{1}", Ip, Port);
                 byte[] bytes = Encoding.ASCII.GetBytes(hello);
                 clientStream.Write(bytes, 0, bytes.Length);
 
@@ -76,7 +78,7 @@ namespace Blockchain
             TcpClient tcpClient = (TcpClient)client;
             NetworkStream clientStream = tcpClient.GetStream();
 
-            while (listen)
+            while (true)
             {
                 byte[] message = new byte[4096];
                 int bytesRead = 0;
@@ -106,11 +108,10 @@ namespace Blockchain
 
                 if (Regex.IsMatch(bufferincmessage, "getBlockChain", RegexOptions.IgnoreCase))
                 {
-                    String responseMessage = blockchain.ToString();
-                    Byte[] data = System.Text.Encoding.ASCII.GetBytes(responseMessage);
+                    String bc= JsonConvert.SerializeObject(Blockchain);
+                    byte[] bytes = Encoding.ASCII.GetBytes(bc);
+                    clientStream.Write(bytes, 0, bytes.Length);
                 }
-
-
             }
         }
     }

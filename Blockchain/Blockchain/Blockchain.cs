@@ -69,23 +69,16 @@ namespace Blockchain
             PendingTransactions.Add(transaction);
         }
 
-        public void ProcessPendingTransactions(string minerAddress)
+        public Block ProcessPendingTransactions(string minerAddress)
         {
+            Random random = new Random();
+            long newId = random.Next(10000, 50000);
+            CreateTransaction(new Transaction(newId, null, minerAddress, Reward));
             Block block = new Block(DateTime.Now, GetLatestBlock().Hash, PendingTransactions);
             AddBlock(block);
 
             PendingTransactions = new List<Transaction>();
-            int newId = PendingTransactions[PendingTransactions.Count - 1].Id + 1;
-            CreateTransaction(new Transaction(newId, null, minerAddress, Reward));
-        }
-
-        public override string ToString() {
-            String result = "";
-            foreach(Block block in Chain)
-            {
-                result += block.ToString();
-            }
-            return result;
+            return block;
         }
     }
 }
