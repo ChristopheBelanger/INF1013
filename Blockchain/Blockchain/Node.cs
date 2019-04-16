@@ -78,9 +78,9 @@ namespace Blockchain
 
         public void Run()
         {
-            try
+            while (true)
             {
-                while (true)
+                try
                 {
                     if (master)
                     {
@@ -98,6 +98,7 @@ namespace Blockchain
                             String idsToSend = JsonConvert.SerializeObject(ids);
                             String responseString = serviceClient.UploadString("https://localhost:5001/api/Transaction", idsToSend);
                             nodeServer.PropagateBlock(Blockchain.GetLatestBlock());
+                            pending = false;
                         }
                     }
                     else
@@ -117,67 +118,85 @@ namespace Blockchain
                         lastRequest = DateTime.Now;
                         String responseString = serviceClient.DownloadString("https://localhost:5001/api/Transaction");
                         pendingTransactions = JsonConvert.DeserializeObject<List<Transaction>>(responseString);
-                        if (pendingTransactions.Count > 0)
+                    }
+                    if (pendingTransactions.Count > 0 && !pending)
+                    {
+                        Blockchain.PendingTransactions = pendingTransactions;
+                        treatedBlock = Blockchain.ProcessPendingTransactions(nodeAddress.ToString());
+                        if (master)
                         {
-                            Blockchain.PendingTransactions = pendingTransactions;
-                            treatedBlock = Blockchain.ProcessPendingTransactions(nodeAddress.ToString());
-                            if (master)
+                            if (Blockchain.GetLatestBlock().PreviousHash == treatedBlock.PreviousHash)
                             {
-                                if (Blockchain.GetLatestBlock().PreviousHash == treatedBlock.PreviousHash)
+                                if (nodeServer.NewBlock != null && Blockchain.GetLatestBlock().PreviousHash == nodeServer.NewBlock.PreviousHash)
                                 {
-                                    if (nodeServer.NewBlock != null && Blockchain.GetLatestBlock().PreviousHash == nodeServer.NewBlock.PreviousHash)
-                                    {
-                                        if (nodeServer.NewBlock.TimeStamp < treatedBlock.TimeStamp)
-                                        {
-                                            Blockchain.AddBlock(nodeServer.NewBlock);
-                                        }
-                                        else
-                                        {
-                                            Blockchain.AddBlock(treatedBlock);
-                                        }
-                                        nodeServer.NewBlock = null;
-                                        treatedBlock = null;
-                                        pendingTransactions = new List<Transaction>();
-                                        List<String> ids = new List<String>();
-                                        foreach (Transaction t in Blockchain.GetLatestBlock().Transactions)
-                                        {
-                                            ids.Add(t.Id.ToString());
-                                        }
-                                        String idsToSend = JsonConvert.SerializeObject(ids);
-                                        responseString = serviceClient.UploadString("https://localhost:5001/api/Transaction", idsToSend);
-                                        nodeServer.PropagateBlock(Blockchain.GetLatestBlock());
-
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if (Blockchain.GetLatestBlock().PreviousHash == treatedBlock.PreviousHash)
-                                {
-                                    if (nodeClient.NewBlock != null)
+                                    if (nodeServer.NewBlock.TimeStamp < treatedBlock.TimeStamp)
                                     {
                                         Blockchain.AddBlock(nodeServer.NewBlock);
-                                        nodeClient.NewBlock = null;
-                                        treatedBlock = null;
-                                        pendingTransactions = new List<Transaction>();
-                                        pending = true;
                                     }
                                     else
                                     {
-                                        nodeClient.PushBlock(treatedBlock);
-                                        treatedBlock = null;
-                                        pendingTransactions = new List<Transaction>();
-                                        pending = true;
+                                        Blockchain.AddBlock(treatedBlock);
                                     }
+                                    nodeServer.NewBlock = null;
+                                    treatedBlock = null;
+                                    pendingTransactions = new List<Transaction>();
+                                    List<String> ids = new List<String>();
+                                    foreach (Transaction t in Blockchain.GetLatestBlock().Transactions)
+                                    {
+                                        ids.Add(t.Id.ToString());
+                                    }
+                                    String idsToSend = JsonConvert.SerializeObject(ids);
+                                    //serviceClient = new WebClient();
+                                    serviceClient.Headers.Add("Content-Type", "application/json");
+                                    String responseString = serviceClient.UploadString("https://localhost:5001/api/Transaction", idsToSend);
+                                    nodeServer.PropagateBlock(Blockchain.GetLatestBlock());
+
+                                }
+                                else
+                                {
+                                    Blockchain.AddBlock(treatedBlock);
+                                    treatedBlock = null;
+                                    pendingTransactions = new List<Transaction>();
+                                    List<String> ids = new List<String>();
+                                    foreach (Transaction t in Blockchain.GetLatestBlock().Transactions)
+                                    {
+                                        ids.Add(t.Id.ToString());
+                                    }
+                                    String idsToSend = "'" + JsonConvert.SerializeObject(ids) + "'";
+                                    //serviceClient = new WebClient();
+                                    serviceClient.Headers.Add("Content-Type", "application/json");
+                                    String responseString = serviceClient.UploadString("https://localhost:5001/api/Transaction", idsToSend);
+                                    nodeServer.PropagateBlock(Blockchain.GetLatestBlock());
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (Blockchain.GetLatestBlock().PreviousHash == treatedBlock.PreviousHash)
+                            {
+                                if (nodeClient.NewBlock != null)
+                                {
+                                    Blockchain.AddBlock(nodeServer.NewBlock);
+                                    nodeClient.NewBlock = null;
+                                    treatedBlock = null;
+                                    pendingTransactions = new List<Transaction>();
+                                    pending = false;
+                                }
+                                else
+                                {
+                                    nodeClient.PushBlock(treatedBlock);
+                                    treatedBlock = null;
+                                    pendingTransactions = new List<Transaction>();
+                                    pending = true;
                                 }
                             }
                         }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
         }
     }

@@ -41,7 +41,7 @@ namespace Blockchain
         public void Start()
         {
             Clients = new List<TcpClient>();
-            this.tcpListener = new TcpListener(IPAddress.Parse(Ip), Port);
+            this.tcpListener = new TcpListener(IPAddress.Parse(Ip), Port+1);
             this.listenThread = new Thread(new ThreadStart(ListenForClients));
             this.listenThread.Start();
         }
@@ -54,7 +54,7 @@ namespace Blockchain
         private void ListenForClients()
         {
             this.tcpListener.Start();
-            Console.WriteLine("Server has started on {0}:{1}.{2}En Attente de connexion...", Ip, Port, Environment.NewLine);
+            Console.WriteLine("Server has started on {0}:{1}.{2}En Attente de connexion...", Ip+1, Port, Environment.NewLine);
 
             while (true)
             {
@@ -135,7 +135,7 @@ namespace Blockchain
                         if (NewBlock == null)
                         {
                             NewBlock = JsonConvert.DeserializeObject<Block>(bufferincmessage.Split('^')[1]);
-                            byte[] bytes = Encoding.ASCII.GetBytes("pending");
+                            byte[] bytes = Encoding.ASCII.GetBytes("pendingReview");
                             clientStream.Write(bytes, 0, bytes.Length);
                         }
                     }

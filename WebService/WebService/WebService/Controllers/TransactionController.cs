@@ -23,10 +23,11 @@ namespace WebService.Controllers
 
         // POST api/Transaction
         [HttpPost]
-        public void Post([FromBody] String txIdStr)
+        public string Post([FromBody] String txIdStr)
         {
             int[] txId = JsonConvert.DeserializeObject<int[]>(txIdStr);
             TransactionPool.FinishTx(txId);
+            return "Success";
         }
     }
 }

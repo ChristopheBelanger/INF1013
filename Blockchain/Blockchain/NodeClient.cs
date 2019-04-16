@@ -52,9 +52,9 @@ namespace Blockchain
                 {
                     //create a thread to handle communication
                     //with connected client
-                    Thread serverThread = new Thread(new ParameterizedThreadStart(HandleServerComm));
-
+                    Thread serverThread = new Thread(new ThreadStart(HandleServerComm));
                     serverThread.Start(client);
+
                     return true;
                 }
             }
@@ -65,21 +65,18 @@ namespace Blockchain
             }
             return false;
         }
-        public void CloseMasterConnection()
-        {
-            client.Close();
-        }
 
         public Blockchain GetBlockChain()
         {
             try
             {
+                NetworkStream getstream = client.GetStream();
                 // Translate the passed message into ASCII and store it as a Byte array.
                 Byte[] data = System.Text.Encoding.ASCII.GetBytes("getBlockChain");
 
 
                 // Send the message to the connected TcpServer. 
-                stream.Write(data, 0, data.Length);
+                getstream.Write(data, 0, data.Length);
 
                 Console.WriteLine("Sent: {0}", "getBlockChain");
 
@@ -89,7 +86,7 @@ namespace Blockchain
 
                 try
                 {
-                    bytesRead = stream.Read(message, 0, message.Length);
+                    bytesRead = getstream.Read(message, 0, message.Length);
                 }
                 catch (Exception e)
                 {
@@ -109,7 +106,7 @@ namespace Blockchain
                 String bufferincmessage = encoder.GetString(message, 0, bytesRead);
 
                 // Close everything.
-                //stream.Close();
+                getstream.Close();
                 //client.Close();
 
                 return JsonConvert.DeserializeObject<Blockchain>(bufferincmessage);
@@ -135,17 +132,18 @@ namespace Blockchain
             pushstream.Close();
         }
 
-        private void HandleServerComm(object server)
+        private void HandleServerComm()
         {
             while (true)
             {
+                NetworkStream handleStream = client.GetStream();
                 byte[] message = new byte[4096];
                 int bytesRead = 0;
 
                 try
                 {
                     //blocks until a client sends a message
-                    bytesRead = stream.Read(message, 0, message.Length);
+                    bytesRead = handleStream.Read(message, 0, message.Length);
                 }
                 catch
                 {
@@ -165,7 +163,7 @@ namespace Blockchain
                 String bufferincmessage = encoder.GetString(message, 0, bytesRead);
 
 
-                if (Regex.IsMatch(bufferincmessage, "pending", RegexOptions.IgnoreCase))
+                if (Regex.IsMatch(bufferincmessage, "pendingReview", RegexOptions.IgnoreCase))
                 {
                     //do something..
                 }
@@ -177,7 +175,8 @@ namespace Blockchain
                     }
                     else
                     {
-                        if(Regex.IsMatch(bufferincmessage, "BlockChain", RegexOptions.IgnoreCase)){
+                        if (Regex.IsMatch(bufferincmessage, "Blockchain", RegexOptions.IgnoreCase))
+                        {
                             Blockchain = JsonConvert.DeserializeObject<Blockchain>(bufferincmessage.Split('^')[1]);
                         }
                     }

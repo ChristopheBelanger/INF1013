@@ -16,7 +16,14 @@ namespace Blockchain
             addresseService.port = 5001;
             AddresseIP addresse = new AddresseIP();
             addresse.ip = "127.0.0.1";
-            addresse.port = 8090;
+            try
+            {
+                addresse.port = int.Parse(args[0]);
+            }
+            catch
+            {
+                addresse.port = 9005;
+            }
 
             Node node = new Node(addresseService, addresse);
         }

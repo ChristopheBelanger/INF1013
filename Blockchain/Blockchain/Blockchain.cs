@@ -71,9 +71,9 @@ namespace Blockchain
 
         public Block ProcessPendingTransactions(string minerAddress)
         {
-            Random random = new Random();
-            long newId = random.Next(10000, 50000);
-            CreateTransaction(new Transaction(newId, null, minerAddress, Reward));
+            //Random random = new Random();
+            //long newId = random.Next(10000, 50000);
+            //CreateTransaction(new Transaction(newId, null, minerAddress, Reward));
             Block block = new Block(DateTime.Now, GetLatestBlock().Hash, PendingTransactions);
             AddBlock(block);
 

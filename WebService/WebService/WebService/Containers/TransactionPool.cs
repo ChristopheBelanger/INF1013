@@ -56,7 +56,7 @@ namespace WebService.Containers
             List<Transaction> fetchedTx = new List<Transaction>();
             lock (TransactionLock)
             {
-                if (TxPool.Count > 0)
+                if (TxPool.Count > 3)
                 {
                     var nbFetch = TxPool.Count >= 4 ? 4 : TxPool.Count;
                     fetchedTx = TxPool.GetRange(0, nbFetch);
