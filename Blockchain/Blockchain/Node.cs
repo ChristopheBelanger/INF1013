@@ -20,7 +20,9 @@ namespace Blockchain
         Blockchain Blockchain { get; }
         Block treatedBlock = null;
         int rank { get; set; } = 0;
+        DateTime lastRequest;
         Boolean master = false;
+        Boolean pending = false;
         AddresseIP nodeAddress { get; set; }
         AddresseIP masterIP { get; set; } = new AddresseIP();
 
@@ -70,7 +72,7 @@ namespace Blockchain
                 nodeServer = new NodeServer(Blockchain, addresse.ip, addresse.port);
                 nodeServer.Start();
             }
-
+            lastRequest = DateTime.Now;
             Run();
         }
 
@@ -88,12 +90,31 @@ namespace Blockchain
                             Blockchain.AddBlock(nodeServer.NewBlock);
                             nodeServer.NewBlock = null;
                             pendingTransactions = new List<Transaction>();
-                            //nodeserver.send newblock
+                            List<String> ids = new List<String>();
+                            foreach (Transaction t in Blockchain.GetLatestBlock().Transactions)
+                            {
+                                ids.Add(t.Id.ToString());
+                            }
+                            String idsToSend = JsonConvert.SerializeObject(ids);
+                            String responseString = serviceClient.UploadString("https://localhost:5001/api/Transaction", idsToSend);
+                            nodeServer.PropagateBlock(Blockchain.GetLatestBlock());
                         }
                     }
-                    if (pendingTransactions.Count > 0)
+                    else
+                    {
+                        if (nodeClient.NewBlock != null)
+                        {
+                            Blockchain.AddBlock(nodeClient.NewBlock);
+                            nodeClient.NewBlock = null;
+                            pendingTransactions = new List<Transaction>();
+                            pending = false;
+                        }
+                    }
+                    TimeSpan timeSpan = DateTime.Now.Subtract(lastRequest);
+                    if (pendingTransactions.Count <= 0 && !pending && timeSpan.Seconds > 15)
                     {
                         //get transactions from service
+                        lastRequest = DateTime.Now;
                         String responseString = serviceClient.DownloadString("https://localhost:5001/api/Transaction");
                         pendingTransactions = JsonConvert.DeserializeObject<List<Transaction>>(responseString);
                         if (pendingTransactions.Count > 0)
@@ -109,18 +130,44 @@ namespace Blockchain
                                         if (nodeServer.NewBlock.TimeStamp < treatedBlock.TimeStamp)
                                         {
                                             Blockchain.AddBlock(nodeServer.NewBlock);
-                                            nodeServer.NewBlock = null;
-                                            treatedBlock = null;
-                                            pendingTransactions = new List<Transaction>();
-                                            List<String> ids = new List<String>();
-                                            foreach(Transaction t in Blockchain.GetLatestBlock().Transactions)
-                                            {
-                                                ids.Add(t.Id.ToString());
-                                            }
-                                            String idsToSend = JsonConvert.SerializeObject(ids);
-                                            responseString = serviceClient.UploadString("https://localhost:5001/api/Connection", idsToSend);
-                                            //nodeserver.send newblock
                                         }
+                                        else
+                                        {
+                                            Blockchain.AddBlock(treatedBlock);
+                                        }
+                                        nodeServer.NewBlock = null;
+                                        treatedBlock = null;
+                                        pendingTransactions = new List<Transaction>();
+                                        List<String> ids = new List<String>();
+                                        foreach (Transaction t in Blockchain.GetLatestBlock().Transactions)
+                                        {
+                                            ids.Add(t.Id.ToString());
+                                        }
+                                        String idsToSend = JsonConvert.SerializeObject(ids);
+                                        responseString = serviceClient.UploadString("https://localhost:5001/api/Transaction", idsToSend);
+                                        nodeServer.PropagateBlock(Blockchain.GetLatestBlock());
+
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (Blockchain.GetLatestBlock().PreviousHash == treatedBlock.PreviousHash)
+                                {
+                                    if (nodeClient.NewBlock != null)
+                                    {
+                                        Blockchain.AddBlock(nodeServer.NewBlock);
+                                        nodeClient.NewBlock = null;
+                                        treatedBlock = null;
+                                        pendingTransactions = new List<Transaction>();
+                                        pending = true;
+                                    }
+                                    else
+                                    {
+                                        nodeClient.PushBlock(treatedBlock);
+                                        treatedBlock = null;
+                                        pendingTransactions = new List<Transaction>();
+                                        pending = true;
                                     }
                                 }
                             }

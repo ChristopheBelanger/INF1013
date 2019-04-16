@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Serialization;
@@ -14,10 +15,12 @@ namespace Blockchain
     {
         private TcpListener tcpListener;
         private Thread listenThread;
+        IList<TcpClient> Clients;
         String Ip { get; set; } = "127.0.0.1";
         int Port { get; set; } = 8080;
         public Blockchain Blockchain { get; set; }
         public Block NewBlock { get; set; } = null;
+        public bool Propagate { get; set; } = false;
 
         public NodeServer(Blockchain blockchain, String ip, int port)
         {
@@ -37,6 +40,7 @@ namespace Blockchain
 
         public void Start()
         {
+            Clients = new List<TcpClient>();
             this.tcpListener = new TcpListener(IPAddress.Parse(Ip), Port);
             this.listenThread = new Thread(new ThreadStart(ListenForClients));
             this.listenThread.Start();
@@ -68,8 +72,20 @@ namespace Blockchain
                 //create a thread to handle communication
                 //with connected client
                 Thread clientThread = new Thread(new ParameterizedThreadStart(HandleClientComm));
-
+                Clients.Add(client);
                 clientThread.Start(client);
+            }
+        }
+
+        public void PropagateBlock(Block block)
+        {
+            foreach (TcpClient client in Clients)
+            {
+                NetworkStream stream = client.GetStream();
+                String bc = "newBlock^" + JsonConvert.SerializeObject(block);
+                byte[] bytes = Encoding.ASCII.GetBytes(bc);
+                stream.Write(bytes, 0, bytes.Length);
+                stream.Close();
             }
         }
 
@@ -108,7 +124,7 @@ namespace Blockchain
 
                 if (Regex.IsMatch(bufferincmessage, "getBlockChain", RegexOptions.IgnoreCase))
                 {
-                    String bc = JsonConvert.SerializeObject(Blockchain);
+                    String bc = "Blockchain^" + JsonConvert.SerializeObject(Blockchain);
                     byte[] bytes = Encoding.ASCII.GetBytes(bc);
                     clientStream.Write(bytes, 0, bytes.Length);
                 }

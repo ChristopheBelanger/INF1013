@@ -109,7 +109,7 @@ namespace Blockchain
                 String bufferincmessage = encoder.GetString(message, 0, bytesRead);
 
                 // Close everything.
-                stream.Close();
+                //stream.Close();
                 //client.Close();
 
                 return JsonConvert.DeserializeObject<Blockchain>(bufferincmessage);
@@ -126,7 +126,16 @@ namespace Blockchain
             return null;
         }
 
-        private void HandleServerComm(object client)
+        public void PushBlock(Block block)
+        {
+            NetworkStream pushstream = client.GetStream();
+            String bc = "newBlock^" + JsonConvert.SerializeObject(block);
+            byte[] bytes = Encoding.ASCII.GetBytes(bc);
+            pushstream.Write(bytes, 0, bytes.Length);
+            pushstream.Close();
+        }
+
+        private void HandleServerComm(object server)
         {
             while (true)
             {
@@ -158,13 +167,19 @@ namespace Blockchain
 
                 if (Regex.IsMatch(bufferincmessage, "pending", RegexOptions.IgnoreCase))
                 {
-                   //do something..
+                    //do something..
                 }
                 else
                 {
                     if (Regex.IsMatch(bufferincmessage, "newBlock", RegexOptions.IgnoreCase))
                     {
                         NewBlock = JsonConvert.DeserializeObject<Block>(bufferincmessage.Split('^')[1]);
+                    }
+                    else
+                    {
+                        if(Regex.IsMatch(bufferincmessage, "BlockChain", RegexOptions.IgnoreCase)){
+                            Blockchain = JsonConvert.DeserializeObject<Blockchain>(bufferincmessage.Split('^')[1]);
+                        }
                     }
                 }
 
