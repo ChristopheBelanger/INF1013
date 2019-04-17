@@ -12,8 +12,8 @@ namespace Blockchain
         {
             blockchain = new Blockchain();
             AddresseIP addresseService = new AddresseIP();
-            addresseService.ip = "dreamtv.dlinkddns.com";//69.51.252.162;
-            addresseService.port = 5000;
+            addresseService.ip = "localhost";//"dreamtv.dlinkddns.com";//69.51.252.162;
+            addresseService.port = 5001;
             AddresseIP addresse = new AddresseIP();
             addresse.ip = "127.0.0.1";
             try
