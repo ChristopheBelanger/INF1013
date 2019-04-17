@@ -38,11 +38,11 @@ namespace WebService.Database
                 if (id == reader.GetFieldValue<string>(1))
                 {
                     action = "Send To";
-                    wallet = id;
+                    wallet = reader.GetFieldValue<string>(2);
                 }
                 else {
-                    action = "From";
-                    wallet = reader.GetFieldValue<string>(2);
+                    action = "Received From";
+                    wallet = reader.GetFieldValue<string>(1);
                 }
                 transactions.Add(new TransactionHistory(reader.GetFieldValue<long>(0), action, wallet, reader.GetFieldValue<double>(3), reader.GetFieldValue<string>(4)));
             }

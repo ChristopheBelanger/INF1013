@@ -12,7 +12,12 @@
 <script type="text/javascript" language="javascript" src="jquery/jquery.js"></script>
 <link href="css/sb-admin-cover.css" rel="stylesheet">
 <link href="css/sb-admin-style.css" rel="stylesheet" type="text/css" media="all"/>
-
+<style>
+.cover {
+  padding: 0 1.5rem;
+  text-align: center;
+}
+</style>
 </head>
 
 <body>
@@ -35,11 +40,11 @@
 	<div class="container">
 		<div>
 		  <main role="main" class="inner cover">
-			<h1 class="cover-heading">Cover your page.</h1>
-			<p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
-			<p class="lead">
-			  <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
-			</p>
+			<br><br><br><br><br><br><br><br>
+				<p class="lead">Une autre crypto monnaie sans valeur qui n'est accepté nul part comme mode de paiement !!!</p>
+				<p class="text-center">
+				  <a href="#" class="btn btn-lg btn-secondary pull-center">Apprenez-en plus</a>
+				</p>
 		  </main>
 		</div>
 	</div>
