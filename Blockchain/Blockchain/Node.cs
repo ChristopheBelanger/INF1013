@@ -24,6 +24,7 @@ namespace Blockchain
         Boolean master = false;
         Boolean pending = false;
         AddresseIP nodeAddress { get; set; }
+        AddresseIP serviceAddress { get; set; }
         AddresseIP masterIP { get; set; } = new AddresseIP();
 
         public Node(AddresseIP addresseService, AddresseIP addresse)
@@ -31,12 +32,13 @@ namespace Blockchain
             pendingTransactions = new List<Transaction>();
             addressesNoeuds = new List<String>();
             this.nodeAddress = addresse;
+            serviceAddress = addresseService;
 
             // connexion au service, obtenir liste des noeuds maitres et des transactions non traitees
             String addr = "'" + addresse.ip + ":" + addresse.port + "'";
             serviceClient = new WebClient();
             serviceClient.Headers.Add("Content-Type", "application/json");
-            String responseString = serviceClient.UploadString("https://localhost:5001/api/Connection", addr);
+            String responseString = serviceClient.UploadString("https://" + serviceAddress.ip + ":5001/api/Connection", addr);
 
             responseString = responseString.Replace("[", "").Replace("]", "").Replace("\"", "");
             String[] temp = responseString.Split(',');
@@ -96,7 +98,7 @@ namespace Blockchain
                                 ids.Add(t.Id.ToString());
                             }
                             String idsToSend = JsonConvert.SerializeObject(ids);
-                            String responseString = serviceClient.UploadString("https://localhost:5001/api/Transaction", idsToSend);
+                            String responseString = serviceClient.UploadString("https://"+ serviceAddress.ip+":5001/api/Transaction", idsToSend);
                             nodeServer.PropagateBlock(Blockchain.GetLatestBlock());
                             pending = false;
                         }
@@ -116,7 +118,7 @@ namespace Blockchain
                     {
                         //get transactions from service
                         lastRequest = DateTime.Now;
-                        String responseString = serviceClient.DownloadString("https://localhost:5001/api/Transaction");
+                        String responseString = serviceClient.DownloadString("https://" + serviceAddress.ip + ":5001/api/Transaction");
                         pendingTransactions = JsonConvert.DeserializeObject<List<Transaction>>(responseString);
                     }
                     if (pendingTransactions.Count > 0 && !pending)
@@ -148,7 +150,7 @@ namespace Blockchain
                                     String idsToSend = JsonConvert.SerializeObject(ids);
                                     //serviceClient = new WebClient();
                                     serviceClient.Headers.Add("Content-Type", "application/json");
-                                    String responseString = serviceClient.UploadString("https://localhost:5001/api/Transaction", idsToSend);
+                                    String responseString = serviceClient.UploadString("https://" + serviceAddress.ip + ":5001/api/Transaction", idsToSend);
                                     nodeServer.PropagateBlock(Blockchain.GetLatestBlock());
 
                                 }
@@ -165,7 +167,7 @@ namespace Blockchain
                                     String idsToSend = "'" + JsonConvert.SerializeObject(ids) + "'";
                                     //serviceClient = new WebClient();
                                     serviceClient.Headers.Add("Content-Type", "application/json");
-                                    String responseString = serviceClient.UploadString("https://localhost:5001/api/Transaction", idsToSend);
+                                    String responseString = serviceClient.UploadString("https://" + serviceAddress.ip + ":5001/api/Transaction", idsToSend);
                                     nodeServer.PropagateBlock(Blockchain.GetLatestBlock());
                                 }
                             }
