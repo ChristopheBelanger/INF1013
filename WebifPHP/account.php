@@ -61,12 +61,12 @@ IF(ISSET($_SESSION['name'])){
         <div class="col-12">
 		
 		<?php 
+		
+		$fp = fsockopen("tcp://127.0.0.1", 5000, $errno, $errstr);
+		
 		IF(ISSET($_SESSION['wallet'])) {
 			
-			$strHeader = get_headers($WALLET_URL)[0];
-			$statusCode = substr($strHeader, 9, 3 );
-
-			if($statusCode == 404 ) {
+			if (!$fp) {
 				echo "<div class=\"alert alert-danger\">
 					  <strong>Attention!</strong> Probleme de connexion avec le serveur, attendez quelques instant.
 					</div>";
@@ -193,10 +193,7 @@ IF(ISSET($_SESSION['name'])){
 			";}
 		} else {
 			
-			    $strHeader = get_headers($WALLET_URL)[0];
-				$statusCode = substr($strHeader, 9, 3 );
-
-				if($statusCode == 404 ) {
+			    if (!$fp) {
 					echo "<div class=\"alert alert-danger\">
 			  <strong>Attention!</strong> Probleme de connexion avec le serveur, attendez quelques instant.
 			</div>";
