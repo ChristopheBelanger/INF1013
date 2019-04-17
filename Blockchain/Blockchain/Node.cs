@@ -67,7 +67,7 @@ namespace Blockchain
                 if (nodeClient.ConnectToMaster(masterIP.ip, masterIP.port))
                 {
                     //get blockchain du master
-                    Blockchain = nodeClient.GetBlockChain();
+                    Blockchain = nodeClient.GetBlockChain(masterIP.ip, masterIP.port);
                 }
                 nodeServer = new NodeServer(Blockchain, addresse.ip, addresse.port);
                 nodeServer.Start();

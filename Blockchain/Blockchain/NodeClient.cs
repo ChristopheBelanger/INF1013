@@ -53,7 +53,7 @@ namespace Blockchain
                     //create a thread to handle communication
                     //with connected client
                     Thread serverThread = new Thread(new ThreadStart(HandleServerComm));
-                    serverThread.Start(client);
+                    serverThread.Start();
 
                     return true;
                 }
@@ -66,20 +66,14 @@ namespace Blockchain
             return false;
         }
 
-        public Blockchain GetBlockChain()
+        public Blockchain GetBlockChain(String masterIP, int masterPort)
         {
             try
             {
-                NetworkStream getstream = client.GetStream();
-                // Translate the passed message into ASCII and store it as a Byte array.
-                Byte[] data = System.Text.Encoding.ASCII.GetBytes("getBlockChain");
-
-
-                // Send the message to the connected TcpServer. 
-                getstream.Write(data, 0, data.Length);
-
-                Console.WriteLine("Sent: {0}", "getBlockChain");
-
+                TcpClient getclient = new TcpClient();
+                getclient.Connect(masterIP, masterPort);
+                NetworkStream getstream = getclient.GetStream();
+               
                 // Receive the TcpServer.response.
                 byte[] message = new byte[4096];
                 int bytesRead = 0;
@@ -105,11 +99,45 @@ namespace Blockchain
 
                 String bufferincmessage = encoder.GetString(message, 0, bytesRead);
 
+                // Translate the passed message into ASCII and store it as a Byte array.
+                Byte[] data = System.Text.Encoding.ASCII.GetBytes("getBlockChain");
+
+
+                // Send the message to the connected TcpServer. 
+                getstream.Write(data, 0, data.Length);
+
+                Console.WriteLine("Sent: {0}", "getBlockChain");
+
+                // Receive the TcpServer.response.
+                message = new byte[4096];
+                bytesRead = 0;
+
+                try
+                {
+                    bytesRead = getstream.Read(message, 0, message.Length);
+                }
+                catch (Exception e)
+                {
+                    //a socket error has occured
+                    Console.Write(e.Message);
+                }
+
+                if (bytesRead == 0)
+                {
+                    //the server has disconnected from the server
+                    Console.Write("Client deconnecte..");
+                    throw new Exception("Nothing to read from stream..");
+                }
+                //message has successfully been received
+               encoder = new ASCIIEncoding();
+
+                bufferincmessage = encoder.GetString(message, 0, bytesRead);
+
                 // Close everything.
                 getstream.Close();
-                //client.Close();
+                getclient.Close();
 
-                return JsonConvert.DeserializeObject<Blockchain>(bufferincmessage);
+                return JsonConvert.DeserializeObject<Blockchain>(bufferincmessage.Split('^')[1]);
             }
             catch (ArgumentNullException e)
             {
